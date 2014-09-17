@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''@package _cookbook
+'''@package py
 Text Pattern Cookbook.
 
   - Regular Expression (RE): re

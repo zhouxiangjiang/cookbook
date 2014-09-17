@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''@package _cookbook
+'''@package py
 Loop techniques Cookbook.
 
 Loop over index-value pair:

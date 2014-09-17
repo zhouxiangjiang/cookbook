@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''@package _cookbook
+'''@package py
 Find the largest or smallest N items in a collection.
 
 **NOTE**: If you are looking for the _N_ smallest or largest items, and _N_ is

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''@package _cookbook
+'''@package py
 Function Parameters Cookbook.
 
 Function Argument Annotations (Python 3).

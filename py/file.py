@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
-'''@package _cookbook
+'''@package py
 File I/O Cookbook.
 
 By reading and writing only large chunks of data even when the user asks for a

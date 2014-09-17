@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''@package _cookbook
+'''@package py
 Unpack N elements from iterables.
 
 This works with sequences, tuples, strings, files, iterators, and generators.
