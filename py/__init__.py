@@ -34,6 +34,47 @@ Python Cookbook
     `-OO` Discard docstrings in addition to the <em>-O</em> optimizations.
     
 
+## The Zen of Python
+
+> Beautiful is better than ugly.
+>
+> Explicit is better than implicit.
+>
+> Simple is better than complex.
+>
+> Complex is better than complicated.
+>
+> Flat is better than nested.
+>
+> Sparse is better than dense.
+>
+> Readability counts.
+>
+> Special cases aren't special enough to break the rules.
+>
+> Although practicality beats purity.
+>
+> Errors should never pass silently.
+>
+> Unless explicitly silenced.
+>
+> In the face of ambiguity, refuse the temptation to guess.
+>
+> There should be one-- and preferably only one --obvious way to do it.
+>
+> Although that way may not be obvious at first unless you're Dutch.
+>
+> Now is better than never.
+>
+> Although never is often better than *right* now.
+>
+> If the implementation is hard to explain, it's a bad idea.
+>
+> If the implementation is easy to explain, it may be a good idea.
+>
+> Namespaces are one honking great idea -- let's do more of those!
+
+    
 ## Python Coding Style
 
 - Use 4-space indentation, and avoid tabs. ( `-t` option )
@@ -165,6 +206,7 @@ source bin/activate
   - [PEP 8 - Style Guide for Python Code](http://legacy.python.org/dev/peps/pep-0008/)
   - [PEP 257 - Docstring Conventions](http://legacy.python.org/dev/peps/pep-0257/)
   - [PEP 0343 - The with Statement](http://www.python.org/dev/peps/pep-0343/)
+  - [PEP 20 -- The Zen of Python](http://legacy.python.org/dev/peps/pep-0020/)
 
 ## References
 
