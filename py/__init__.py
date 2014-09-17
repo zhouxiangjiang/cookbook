@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''@package _cookbook
+'''@package py
 Python Cookbook
 
-  - unittest
+  - Unit Testing
   - doctest
   - Loop Techniques
   - Unpack Iterable
