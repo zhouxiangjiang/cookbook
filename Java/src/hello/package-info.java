@@ -22,9 +22,10 @@ package hello;
  * 
  * @see http://www.oracle.com/technetwork/java/javase/downloads/index.html
  * @see http://docs.oracle.com/javase/tutorial/
+ * @see http://docs.oracle.com/javase/8/docs/index.html
  * @since JDK 7
  */
-class HelloJava {
+class Hello {
 
 	// start point of Java program
 	public static void main(String[] args) {
@@ -35,7 +36,6 @@ class HelloJava {
 	public void var_args(String... strings) {
 		// TODO strings[0], strings[1], ...
 	}
-
 }
 
 /**
