@@ -20,13 +20,19 @@ package hello;
 /**
  * A Java program
  * 
- * @since Java SE 8
+ * @since Java SE 7
  */
 class HelloJava {
  
     // start point of Java program
     public static void main(String[] args) {
         System.out.println("Hello Java!");
+    }
+    
+    
+    // Variable Arguments
+    public void var_args(String... strings) {
+        // TODO strings[0], strings[1], ...
     }
  
 }
