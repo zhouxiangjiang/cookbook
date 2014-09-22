@@ -186,6 +186,60 @@ class Child extends HelloClass {
 }
 
 /**
+ * Interface definition.
+ * 
+ * <ul>
+ * <li>All <strong>constant values</strong> defined in an interface are
+ * implicitly <code>public</code>, <code>static</code>, and <code>final</code>
+ * <li>A class that implements an interface must implement <strong>all</strong>
+ * the methods declared in the interface.
+ * </ul>
+ */
+interface MyInterface {
+
+	/**
+	 * @deprecated use of {@link #methodDeprecated()} is discourage, use
+	 *             {@link #methodReplacement()} instead.
+	 */
+	@Deprecated
+	public void methodDeprecated();
+
+	/**
+	 * replacement of {@link #methodDeprecated()}.
+	 */
+	public void methodReplacement();
+}
+
+/**
+ * Interface implementation.
+ * 
+ */
+class MyInterfaceImpl implements MyInterface {
+
+	/**
+	 * @deprecated
+	 */
+	@Override
+	public void methodDeprecated() {
+		System.out.println("Call deprecated method");
+	}
+
+	@Override
+	public void methodReplacement() {
+		System.out.println("Call replacement method");
+	}
+
+	/*
+	 * Interface usage example.
+	 */
+	public static void main(String[] args) {
+		MyInterfaceImpl impl = new MyInterfaceImpl();
+		impl.methodDeprecated();
+		impl.methodReplacement();
+	}
+}
+
+/**
  * Java Nested Class Definition
  * 
  * @since JDK 8
