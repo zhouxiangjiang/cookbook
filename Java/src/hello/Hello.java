@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2014 Li Yun <leven.cn@gmail.com>
  * All Rights Reserved.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -16,6 +16,61 @@
  */
 
 package hello;
+
+
+/**
+ * A Java program.
+ * 
+ * @since JDK 8
+ */
+@HelloClass
+public final class Hello {
+
+	@HelloConstructor
+	private Hello() {
+		// Prevents calls from subclass.
+	}
+
+	/**
+	 * Start point of Java program.
+	 * 
+	 * @param args no use
+	 */
+	@HelloMethod
+	public static void main(String[] args) {
+		System.out.println("Hello Java!");
+		
+		OOP obj = new OOP(1); // create an object/instance
+		System.out.println(obj);
+		
+		// Interface usage example.
+		MyInterfaceImpl impl = new MyInterfaceImpl();
+		impl.methodDeprecated();
+		impl.methodReplacement();
+		
+		// Outer/Nested class example.
+		OuterClass oc = new OuterClass();
+		System.out.println(oc);
+		
+		// The compiler <strong>automatically adds some special methods</strong>
+		// when it creates an <code>enum</code> instance.
+		for (Day d : Day.values()) {
+			System.out.println(d + ", " + d.getAbbreviation());
+		}
+	}
+	
+	/**
+	 * Variable Arguments.
+	 *
+	 * @param strings
+	 *            variable-length arguments
+	 */
+	@HelloMethod
+	public static void varArgs(final String... strings) {
+		// TODO strings[0], strings[1], ...
+	}
+}
+
 
 /**
  * Java class definition.
@@ -32,19 +87,26 @@ package hello;
  * 
  * @since JDK 8
  */
-public class HelloClass {
+@HelloClass
+class OOP {
 
-	// Constant Attributes
-	//
-	// If a primitive type or a string is defined as a constant and the value
-	// is known at compile time, the compiler replaces the constant name
-	// everywhere in the code with its value. This is called a "compile-time
-	// constant". If the value of the constant in the outside world changes,
-	// you will need to recompile any classes that use this constant to get
-	// the current value.
+	/** Constant Attributes
+	 *
+	 * If a primitive type or a string is defined as a constant and the value
+	 * is known at compile time, the compiler replaces the constant name
+	 * everywhere in the code with its value. This is called a "compile-time
+	 * constant". If the value of the constant in the outside world changes,
+	 * you will need to recompile any classes that use this constant to get
+	 * the current value.
+	 */
+	@HelloField
 	public static final double PI = 3.141592653589793;
 
-	private static int class_attribute = 0; // class attribute
+	/**
+	 * Class attribute.
+	 */
+	@HelloField
+	private static int classAttribute;
 
 	// Static Initialization Block
 	//
@@ -59,10 +121,14 @@ public class HelloClass {
 	// that static initialization blocks are called in the order that they
 	// appear in the source code.
 	static {
-		// TODO: initialization code goes here ...
+		classAttribute = 0;
 	}
 
-	protected int instance_attribute = 0; // instance attribute
+	/**
+	 * instance attribute.
+	 */
+	@HelloField
+	protected int instanceAttribute = 0;
 
 	/**
 	 * Constructor
@@ -82,27 +148,33 @@ public class HelloClass {
 	 * @param i
 	 *            Init value of instance attribute
 	 */
-	public HelloClass(int i) {
-		class_attribute++;
-		this.instance_attribute = i;
+	@HelloConstructor
+	public OOP(final int i) {
+		classAttribute++;
+		this.instanceAttribute = i;
 	}
 
-	public HelloClass() {
+	/**
+	 * Default constructor.
+	 */
+	@HelloConstructor
+	public OOP() {
 		this(0);
 	}
 
 	/**
-	 * Instance method
+	 * Instance method.
 	 * 
 	 * @param i
 	 *            Parameter of instance method
 	 */
+	@HelloMethod
 	public void instanceMethod(int i) {
-		this.instance_attribute += i;
+		this.instanceAttribute += i;
 	}
 
 	/**
-	 * Overloaded method
+	 * Overloaded method.
 	 * 
 	 * <strong>NOTE</strong>: Overloaded methods should be used sparingly, as
 	 * they can make code much less readable.
@@ -110,6 +182,7 @@ public class HelloClass {
 	 * @param f
 	 *            Nothing
 	 */
+	@HelloMethod
 	public void instanceMethod(float f) {
 		// TODO
 	}
@@ -131,33 +204,31 @@ public class HelloClass {
 	 * <li>{@link #toString()} - Returns a <strong>string
 	 * representation</strong> of the object.
 	 * </ul>
+	 * 
+	 * @return string representation.
 	 */
 	@Override
+	@HelloMethod
 	public String toString() {
-		return String.valueOf(this.instance_attribute);
-	}
-
-	// start point of Java program
-	public static void main(String[] args) {
-		HelloClass h = new HelloClass(1); // create an object/instance
-		System.out.println(HelloClass.class_attribute);
-		System.out.println(h);
+		return String.valueOf(classAttribute + this.instanceAttribute);
 	}
 }
 
+
 /**
- * Inheritance
+ * Inheritance.
  * 
- * @since JDK 7
+ * @since JDK 8
  */
-class Child extends HelloClass {
+@HelloClass
+class Child extends OOP {
 
 	/**
 	 * Child Constructor
 	 * 
 	 * <p>
 	 * <code>super</code> means instance of super class (e.g.,
-	 * {@link HelloClass})
+	 * {@link OOP})
 	 * </p>
 	 * 
 	 * <p>
@@ -174,16 +245,17 @@ class Child extends HelloClass {
 	}
 
 	/**
-	 * Instance method inheritance from parent class {@link HelloClass}
+	 * Instance method inheritance from parent class {@link OOP}.
 	 * 
 	 * @param i
 	 *            Parameter of instance method
 	 */
 	@Override
 	public void instanceMethod(int i) {
-		this.instance_attribute += i;
+		this.instanceAttribute += i;
 	}
 }
+
 
 /**
  * Interface definition.
@@ -202,13 +274,14 @@ interface MyInterface {
 	 *             {@link #methodReplacement()} instead.
 	 */
 	@Deprecated
-	public void methodDeprecated();
+	void methodDeprecated();
 
 	/**
 	 * replacement of {@link #methodDeprecated()}.
 	 */
-	public void methodReplacement();
+	void methodReplacement();
 }
+
 
 /**
  * Interface implementation.
@@ -228,33 +301,31 @@ class MyInterfaceImpl implements MyInterface {
 	public void methodReplacement() {
 		System.out.println("Call replacement method");
 	}
-
-	/*
-	 * Interface usage example.
-	 */
-	public static void main(String[] args) {
-		MyInterfaceImpl impl = new MyInterfaceImpl();
-		impl.methodDeprecated();
-		impl.methodReplacement();
-	}
 }
 
+
 /**
- * Java Nested Class Definition
+ * Outer/Nested Class Definition.
  * 
  * @since JDK 8
  */
+@HelloClass
 class OuterClass {
 
+	/**
+	 * Nested class instance.
+	 */
+	@HelloField
 	private NestedClass nc;
 
+	@HelloConstructor
 	public OuterClass() {
 		this.nc = new NestedClass();
 	}
 
-	public static void main(String[] args) {
-		OuterClass oc = new OuterClass();
-		System.out.println(oc.nc);
+	@Override
+	public String toString() {
+		return this.nc.toString();
 	}
 
 	/**
@@ -282,11 +353,80 @@ class OuterClass {
 	 * access to other members of the enclosing class.
 	 * </ul>
 	 */
+	@HelloClass
 	private class NestedClass {
 
 		@Override
 		public String toString() {
 			return "Nested Class";
 		}
+	}
+}
+
+
+/**
+ * EnumType Definition (Day in a week).
+ *
+ * <p>
+ * All enums <strong>implicitly</strong> extend {@link java.lang.Enum}.
+ * </p>
+ *
+ * <p>
+ * Since Java does not support multiple inheritance, an <code>enum</code>
+ * <strong>cannot extend anything else</strong>.
+ * </p>
+ *
+ * @since JDK 5
+ */
+@HelloClass
+enum Day {
+
+	/*
+	 * The compiler automatically creates the constants that are defined
+	 * <strong>at the beginning</strong> of the <code>enum</code> body.
+	 */
+	SUNDAY("Sun"), MONDAY("Mon"), TUESDAY("Tue"), WEDNESDAY("Wed"),
+			THURSDAY("Thu"), FRIDAY("Fri"), SATURDAY("Sat");
+
+	/**
+	 * Abbreviation name of the day in a week.
+	 */
+	@HelloField
+	private final String abbr;
+
+	/**
+	 * Create an instance with abbreviation name.
+	 *
+	 * <p>
+	 * The <strong>constructor</strong> for an <code>enum</code> type must be
+	 * <strong>package-private</strong> or <code>private</code> access.
+	 * </p>
+	 *
+	 * <p>
+	 * <strong>Notes</strong>: You <strong>cannot</strong> invoke an
+	 * <code>enum</code> constructor yourself.
+	 * </p>
+	 *
+	 * @param abb
+	 *            the abbreviation name of the day.
+	 */
+	@HelloConstructor
+	private Day(String abb) {
+		this.abbr = abb;
+	}
+
+	@HelloConstructor
+	private Day() {
+		this("Unknown");
+	}
+
+	/**
+	 * Get the abbreviation name of the day in a week.
+	 *
+	 * @return the abbreviation name of the day.
+	 */
+	@HelloMethod
+	public String getAbbreviation() {
+		return this.abbr;
 	}
 }

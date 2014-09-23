@@ -15,38 +15,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package hello;
-
-
 /**
- * A Java program.
- *
- * @see http://www.oracle.com/technetwork/java/javase/downloads/index.html
- * @see http://docs.oracle.com/javase/tutorial/
- * @see http://docs.oracle.com/javase/8/docs/index.html
- * @since JDK 8
- */
-class Hello {
-
-	// start point of Java program
-	public static void main(final String[] args) {
-		System.out.println("Hello Java!");
-	}
-
-	/**
-	 * Variable Arguments.
-	 *
-	 * @param strings
-	 *            variable-length arguments
-	 */
-	public static void varArgs(final String... strings) {
-		// TODO strings[0], strings[1], ...
-	}
-}
-
-/**
- * Java Data Type.
- *
+ * Hello Java.
+ * 
+ * <h2>Eclipse Plugins</h2>
+ * <ul>
+ *   <li> [CheckStyle](http://eclipse-cs.sourceforge.net/update)</li>
+ * </ul>
+ *   
+ *   
  * <h2>Primitive Types</h2>
  * <ul>
  * <li><code>byte</code> (8-bit)</li>
@@ -58,7 +35,8 @@ class Hello {
  * <li><code>boolean</code> (true, false)</li>
  * <li><code>char</code> (16-bit Unicode)</li>
  * </ul>
- *
+ * 
+ * 
  * <h2>Literal</h2>
  * <ul>
  * <li><code>0x</code> (hex integer)</li>
@@ -72,109 +50,147 @@ class Hello {
  * <li><code>\\</code> - \</li>
  * <li><code>long i = 999_999_999L</code></li>
  * </ul>
- *
+ *  
+ * 
+ * @see http://www.oracle.com/technetwork/java/javase/downloads/index.html
+ * @see http://docs.oracle.com/javase/tutorial/
+ * @see http://docs.oracle.com/javase/8/docs/index.html
  * @since JDK 8
  */
-class HelloDataType {
+@HelloPackage
+package hello;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+
+/**
+ * Meta Annotation - Target.
+ * 
+ * @see java.lang.annotation
+ * @since JDK 8
+ */
+@Documented  
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+@interface MyTarget {
+	
 	/**
-	 * Example of copy array.
+	 * One of ANNOTATION_TYPE, TYPE, PACKAGE, CONSTRUCTOR, METHOD, PARAMETER,
+	 * FIELD, LOCAL_VARIABLE.
 	 */
-	public static void copyArray() {
-		int[] a = {1, 2};
-		int[] b = new int[a.length];
-		System.arraycopy(a, 0, b, 0, a.length);
-		System.out.println(b);
+    ElementType[] value();
+}
 
-		b = java.util.Arrays.copyOfRange(a, 0, a.length);
-	}
+
+/**
+ * Meta Annotation - Retention.
+ * 
+ * @see java.lang.annotation
+ * @since JDK 8
+ */
+@Documented  
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+@interface MyRetention {
+	
+	/**
+	 * One of RUNTIME, CLASS, SOURCE.
+	 */
+    RetentionPolicy value();
+}
+
+
+/**
+ * Meta Annotation - Documented.
+ * 
+ * @see java.lang.annotation
+ * @since JDK 8
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+@interface MyDocumented {
+	
+}
+
+
+/**
+ * Meta Annotation - Inherited.
+ *
+ * @see java.lang.annotation
+ * @since JDK 8
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+@interface MyInherited {
+	
+}
+
+
+/**
+ * Package annotation for <code>hello</code> package.
+ * 
+ * @author leven.cn@gmail.com
+ * @since JDK 8
+ */
+@Target(ElementType.PACKAGE)
+@Retention(RetentionPolicy.SOURCE)
+@interface HelloPackage {
+	
 }
 
 /**
- * EnumType Definition (Day in a week).
- *
- * <p>
- * All enums <strong>implicitly</strong> extend {@link java.lang.Enum}.
- * </p>
- *
- * <p>
- * Since Java does not support multiple inheritance, an <code>enum</code>
- * <strong>cannot extend anything else</strong>.
- * </p>
- *
- * @since JDK 7
+ * Class annotation for <code>hello</code> package.
+ * 
+ * @author leven.cn@gmail.com
+ * @since JDK 8
  */
-enum Day {
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.SOURCE)
+@interface HelloClass {
+	
+}
 
-	/*
-	 * The compiler automatically creates the constants that are defined
-	 * <strong>at the beginning</strong> of the <code>enum</code> body.
-	 */
-	SUNDAY("Sun"),
-	MONDAY("Mon"),
-	TUESDAY("Tue"),
-	WEDNESDAY("Wed"),
-	THURSDAY("Thu"),
-	FRIDAY("Fri"),
-	SATURDAY("Sat");
 
-	/**
-	 * Abbreviation name of the day in a week.
-	 */
-	private final String abbr;
+/**
+ * Constructor annotation for <code>hello</code> package.
+ * 
+ * @author leven.cn@gmail.com
+ * @since JDK 8
+ */
+@Target(ElementType.CONSTRUCTOR)
+@Retention(RetentionPolicy.SOURCE)
+@interface HelloConstructor {
+	
+}
 
-	/**
-	 * Create an instance with abbreviation name.
-	 *
-	 * <p>
-	 * The <strong>constructor</strong> for an <code>enum</code> type must be
-	 * <strong>package-private</strong> or <code>private</code> access.
-	 * </p>
-	 *
-	 * <p>
-	 * <strong>Notes</strong>: You <strong>cannot</strong> invoke an
-	 * <code>enum</code> constructor yourself.
-	 * </p>
-	 *
-	 * @param abbr
-	 *            the abbreviation name of the day.
-	 */
-	private Day(final String abbr) {
-		this.abbr = abbr;
-	}
 
-	/**
-	 * Create an instance without anything.
-	 */
-	private Day() {
-		this("Unknown");
-	}
+/**
+ * Method annotation for <code>hello</code> package.
+ * 
+ * @author leven.cn@gmail.com
+ * @since JDK 8
+ */
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.SOURCE)
+@interface HelloMethod {
+	
+}
 
-	/**
-	 * Get the abbreviation name of the day in a week.
-	 *
-	 * @return the abbreviation name of the day.
-	 */
-	public String getAbbreviation() {
-		return this.abbr;
-	}
 
-	/**
-	 * Usage.
-	 *
-	 * The compiler <strong>automatically adds some special methods</strong>
-	 * when it creates an <code>enum</code>
-	 *
-	 * @param args No use
-	 *
-	 * <ul>
-	 * <li>{@link #toString()}</li>
-	 * <li>{@link #values()}</li>
-	 * </ul>
-	 */
-	public static void main(final String[] args) {
-		for (Day d : Day.values()) {
-			System.out.println(d + ", " + d.getAbbreviation());
-		}
-	}
+/**
+ * Field annotation for <code>hello</code> package.
+ * 
+ * @author leven.cn@gmail.com
+ * @since JDK 8
+ */
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.SOURCE)
+@interface HelloField {
+	
 }
