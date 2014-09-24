@@ -17,13 +17,7 @@
 
 /**
  * Hello Java.
- * 
- * <h2>Eclipse Plugins</h2>
- * <ul>
- *   <li> [CheckStyle](http://eclipse-cs.sourceforge.net/update)</li>
- * </ul>
- *   
- *   
+ *
  * <h2>Primitive Types</h2>
  * <ul>
  * <li><code>byte</code> (8-bit)</li>
@@ -52,8 +46,6 @@
  * </ul>
  *  
  * 
- * @see http://www.oracle.com/technetwork/java/javase/downloads/index.html
- * @see http://docs.oracle.com/javase/tutorial/
  * @see http://docs.oracle.com/javase/8/docs/index.html
  * @since JDK 8
  */
