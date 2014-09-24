@@ -69,6 +69,7 @@ public final class Hello {
 	public static void varArgs(final String... strings) {
 		// TODO strings[0], strings[1], ...
 	}
+	
 }
 
 

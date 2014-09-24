@@ -17,3 +17,5 @@ Java Cookbook
 **STEP 5**: Java Doc
 
   - [Java SE 8](http://docs.oracle.com/javase/8/docs/index.html)
+  - [JUnit API](http://junit.org/javadoc/latest/)
+  - [JUnit Wiki](https://github.com/junit-team/junit/wiki)
