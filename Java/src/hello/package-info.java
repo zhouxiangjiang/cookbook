@@ -70,10 +70,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 @interface MyTarget {
 	
-	/**
-	 * One of ANNOTATION_TYPE, TYPE, PACKAGE, CONSTRUCTOR, METHOD, PARAMETER,
-	 * FIELD, LOCAL_VARIABLE.
-	 */
+    /**
+     *  One of ANNOTATION_TYPE, TYPE, PACKAGE, CONSTRUCTOR, METHOD, PARAMETER,
+     * FIELD, LOCAL_VARIABLE.
+     */
     ElementType[] value();
 }
 
@@ -89,9 +89,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 @interface MyRetention {
 	
-	/**
-	 * One of RUNTIME, CLASS, SOURCE.
-	 */
+    /**
+     * One of RUNTIME, CLASS, SOURCE.
+     */
     RetentionPolicy value();
 }
 

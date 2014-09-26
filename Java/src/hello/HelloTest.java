@@ -34,28 +34,30 @@ import org.junit.Test;
  */
 public class HelloTest {
 
-	@Before
-	public void setUp() throws Exception {
-	}
+    @Before
+    public void setUp() throws Exception {
+        
+    }
 
-	@After
-	public void tearDown() throws Exception {
-	}
+    @After
+    public void tearDown() throws Exception {
+    
+    }
 
-	@Test
-	public final void thisNotImplemented() {
-		fail("Not yet implemented");
-	}
-	
-	@Test
-    public void thisAlwaysPasses() {
-
+    @Test
+    public final void thisNotImplemented() {
+        fail("Not yet implemented");
     }
 	
-	@Test
+    @Test
+    public void thisAlwaysPasses() {
+        
+    }
+	
+    @Test
     @Ignore
     public void thisIsIgnored() {
-		
+        
     }
 
 }
