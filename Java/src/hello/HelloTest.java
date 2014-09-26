@@ -93,6 +93,13 @@ public class HelloTest {
         thrown.expect(NumberFormatException.class);
         Integer.parseInt("not number");
         
+        // normal (MyInteger)
+        assertEquals(MyInteger.parseInt(this.strValue), this.intValue);
+        
+        // exception (MyInteger)
+        thrown.expect(NumberFormatException.class);
+        Integer.parseInt("not number");
+        
     }
     
     
