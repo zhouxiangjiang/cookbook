@@ -67,6 +67,7 @@ Slightly modified version of Sun Checks (Eclipse) that better matches the code s
     <module name="MagicNumber"/>
     <module name="MissingSwitchDefault"/>
     <module name="RedundantThrows">
+      <property name="allowUnchecked" value="true"/>
       <property name="suppressLoadErrors" value="true"/>
     </module>
     <module name="SimplifyBooleanExpression"/>
