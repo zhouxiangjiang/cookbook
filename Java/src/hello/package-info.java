@@ -125,9 +125,35 @@ import java.lang.annotation.Target;
 
 
 /**
+ * JUnit Annotation - Test.
+ * 
+ * @see org.junit.Test
+ * @since JUnit 4.11
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@interface MyTest {
+    
+}
+
+
+/**
+ * JUnit Annotation - Rule.
+ * 
+ * @see org.junit.Rule
+ * @since JUnit 4.11
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD, ElementType.METHOD })
+@interface MyRule {
+    
+}
+
+
+/**
  * Package annotation for <code>hello</code> package.
  * 
- * @author leven.cn@gmail.com
+ * @author ly <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.PACKAGE)
@@ -139,7 +165,7 @@ import java.lang.annotation.Target;
 /**
  * Class annotation for <code>hello</code> package.
  * 
- * @author leven.cn@gmail.com
+ * @author ly <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.TYPE)
@@ -152,7 +178,7 @@ import java.lang.annotation.Target;
 /**
  * Constructor annotation for <code>hello</code> package.
  * 
- * @author leven.cn@gmail.com
+ * @author ly <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.CONSTRUCTOR)
@@ -165,7 +191,7 @@ import java.lang.annotation.Target;
 /**
  * Method annotation for <code>hello</code> package.
  * 
- * @author leven.cn@gmail.com
+ * @author ly <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.METHOD)
@@ -178,7 +204,7 @@ import java.lang.annotation.Target;
 /**
  * Field annotation for <code>hello</code> package.
  * 
- * @author leven.cn@gmail.com
+ * @author ly <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.FIELD)

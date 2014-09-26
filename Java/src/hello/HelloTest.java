@@ -17,26 +17,31 @@
 
 package hello;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 
 /**
  * Tests for {@link Hello}.
  *
- * @author leven.cn@gmail.com (Li Yun)
+ * @author ly <leven.cn@gmail.com>
  * @since JDK 8
  * @since JUnit 4.11
  */
 public class HelloTest {
+    
+    final int intValue = 10;
+    String strValue = "10";
 
     @Before
     public void setUp() throws Exception {
-        
     }
 
     @After
@@ -57,6 +62,46 @@ public class HelloTest {
     @Test
     @Ignore
     public void thisIsIgnored() {
+        
+    }
+    
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+    
+    // String => int
+    //
+    // @see Integer#parseInt(String)
+    // @see Integer#parseInt(String, int)
+    @Test
+    public final void strToInt() {
+        
+        // normal
+        assertEquals(Integer.parseInt(this.strValue), this.intValue);
+        
+        // exception
+        thrown.expect(NumberFormatException.class);
+        Integer.parseInt("not number");
+        
+    }
+    
+    
+    // int => String
+    //
+    // The method Integer.toString(int) should generally be
+    // used in preference to the method String.valueOf(int), as
+    // Integer.toString(int) method is likely to yield
+    // significantly better time performance by less call hierarchy.
+    //
+    // @see Integer#toString(int)
+    // @see String#valueOf(int)
+    @Test
+    public final void intToStr() {
+        
+        // better
+        assertEquals(Integer.toString(this.intValue), this.strValue);
+        
+        // poor
+        assertEquals(String.valueOf(this.intValue), this.strValue);
         
     }
 
