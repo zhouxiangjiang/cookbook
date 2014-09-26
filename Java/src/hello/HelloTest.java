@@ -31,7 +31,7 @@ import org.junit.rules.ExpectedException;
 /**
  * Tests for {@link Hello}.
  *
- * @author ly <leven.cn@gmail.com>
+ * @author Li Yun <leven.cn@gmail.com>
  * @since JDK 8
  * @since JUnit 4.11
  */

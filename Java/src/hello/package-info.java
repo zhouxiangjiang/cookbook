@@ -153,7 +153,7 @@ import java.lang.annotation.Target;
 /**
  * Package annotation for <code>hello</code> package.
  * 
- * @author ly <leven.cn@gmail.com>
+ * @author Li Yun <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.PACKAGE)
@@ -165,7 +165,7 @@ import java.lang.annotation.Target;
 /**
  * Class annotation for <code>hello</code> package.
  * 
- * @author ly <leven.cn@gmail.com>
+ * @author Li Yun <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.TYPE)
@@ -178,7 +178,7 @@ import java.lang.annotation.Target;
 /**
  * Constructor annotation for <code>hello</code> package.
  * 
- * @author ly <leven.cn@gmail.com>
+ * @author Li Yun <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.CONSTRUCTOR)
@@ -191,7 +191,7 @@ import java.lang.annotation.Target;
 /**
  * Method annotation for <code>hello</code> package.
  * 
- * @author ly <leven.cn@gmail.com>
+ * @author Li Yun <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.METHOD)
@@ -204,7 +204,7 @@ import java.lang.annotation.Target;
 /**
  * Field annotation for <code>hello</code> package.
  * 
- * @author ly <leven.cn@gmail.com>
+ * @author Li Yun <leven.cn@gmail.com>
  * @since JDK 8
  */
 @Target(ElementType.FIELD)
