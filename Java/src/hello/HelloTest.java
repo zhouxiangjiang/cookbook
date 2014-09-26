@@ -37,8 +37,10 @@ import org.junit.rules.ExpectedException;
  */
 public class HelloTest {
     
-    final int intValue = 10;
-    String strValue = "10";
+    final int intValue = 9;
+    String strValue = "9";
+    char charValue = '9';
+    final int radix = 10;
 
     @Before
     public void setUp() throws Exception {
@@ -67,6 +69,15 @@ public class HelloTest {
     
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+    
+    // char => int
+    //
+    // @see Character.digit(char, int radix)
+    @Test
+    public final void charToInt() {        
+        assertEquals(
+                Character.digit(this.charValue, this.radix), this.intValue);
+    }
     
     // String => int
     //

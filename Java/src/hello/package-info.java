@@ -46,7 +46,8 @@
  * </ul>
  *  
  * 
- * @see http://docs.oracle.com/javase/8/docs/index.html
+ * @see <a href="http://docs.oracle.com/javase/8/docs/index.html">
+ *      Java SE 8 Documentation</a>
  * @since JDK 8
  */
 @HelloPackage
