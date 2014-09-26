@@ -20,29 +20,29 @@
  *
  * <h2>Primitive Types</h2>
  * <ul>
- * <li><code>byte</code> (8-bit)</li>
- * <li><code>short</code> (16-bit)</li>
- * <li><code>int</code> (32-bit)</li>
- * <li><code>long</code> (64-bit)</li>
- * <li><code>float</code> (32-bit IEEE 754)</li>
- * <li><code>double</code> (64-bit IEEE 754)</li>
- * <li><code>boolean</code> (true, false)</li>
- * <li><code>char</code> (16-bit Unicode)</li>
+ * <li>{@code byte} (8-bit)</li>
+ * <li>{@code short} (16-bit)</li>
+ * <li>{@code int} (32-bit)</li>
+ * <li>{@code long} (64-bit)</li>
+ * <li>{@code float} (32-bit IEEE 754)</li>
+ * <li>{@code double} (64-bit IEEE 754)</li>
+ * <li>{@code boolean} (true, false)</li>
+ * <li>{@code char} (16-bit Unicode)</li>
  * </ul>
  * 
  * 
  * <h2>Literal</h2>
  * <ul>
- * <li><code>0x</code> (hex integer)</li>
- * <li><code>0b</code> (binary integer)</li>
- * <li><code>F</code> (float)</li>
- * <li><code>D</code> (double)</li>
- * <li><code>\t</code> - Tab</li>
- * <li><code>\n</code> - Newline</li>
- * <li><code>\'</code> - '</li>
- * <li><code>\"</code> - "</li>
- * <li><code>\\</code> - \</li>
- * <li><code>long i = 999_999_999L</code></li>
+ * <li>{@code 0x} (hex integer)</li>
+ * <li>{@code b} (binary integer)</li>
+ * <li>{@code F} (float)</li>
+ * <li>{@code D} (double)</li>
+ * <li>{@code \t} - Tab</li>
+ * <li>{@code \n} - Newline</li>
+ * <li>{@code \'} - '</li>
+ * <li>{@code \"} - "</li>
+ * <li>{@code \\} - \</li>
+ * <li>{@code long i = 999_999_999L}</li>
  * </ul>
  *  
  * 

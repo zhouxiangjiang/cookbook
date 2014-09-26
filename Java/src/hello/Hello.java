@@ -53,7 +53,7 @@ public final class Hello {
         System.out.println(oc);
 		
         // The compiler <strong>automatically adds some special methods</strong>
-        // when it creates an <code>enum</code> instance.
+        // when it creates an {@code enum} instance.
         for (Day d : Day.values()) {
             System.out.println(d + ", " + d.getAbbreviation());
         }
@@ -79,9 +79,9 @@ public final class Hello {
  * <h2>Access Level</h2>
  * <p>
  * Use the <strong>most restrictive</strong> access level that makes sense for a
- * particular member. Use <code>private</code> unless you have a good reason not
- * to. Avoid <code>public</code> fields except for <strong>constants</strong>.
- * <code>public</code> fields are <strong>not recommended for production
+ * particular member. Use {@code private} unless you have a good reason not
+ * to. Avoid {@code public} fields except for <strong>constants</strong>.
+ * {@code public} fields are <strong>not recommended for production
  * code</strong>, since they tend to link you to a particular implementation and
  * limit your flexibility in changing your code.
  * </p>
@@ -112,7 +112,7 @@ class OOP {
     // Static Initialization Block
     //
     // If initialization for class attributes requires some logic
-    // (for example, error handling or a <code>for</code> loop to fill a
+    // (for example, error handling or a {@code for} loop to fill a
     // complex array), simple assignment is inadequate. To provide the same
     // capability for class attributes, the Java programming language includes
     // "static initialization blocks".
@@ -136,13 +136,13 @@ class OOP {
      * 
      * <p>
      * If present, the invocation of <strong>another constructor</strong> (e.g.,
-     * <code>this()</code>) must be the <strong>first line</strong> in the
+     * {@code this()}) must be the <strong>first line</strong> in the
      * constructor.
      * </p>
      * 
      * <p>
      * Methods called from <strong>constructors</strong> should generally be
-     * declared <code>final</code>. If a constructor calls a non-final method, a
+     * declared {@code final}. If a constructor calls a non-final method, a
      * subclass may redefine that method with surprising or undesirable results.
      * </p>
      * 
@@ -228,8 +228,7 @@ class Child extends OOP {
      * Child Constructor
      * 
      * <p>
-     * <code>super</code> means instance of super class (e.g.,
-     * {@link OOP})
+     * {@code super} means instance of super class (e.g., {@link OOP})
      * </p>
      * 
      * <p>
@@ -237,8 +236,8 @@ class Child extends OOP {
      * superclass constructor, the Java compiler automatically inserts a call to
      * the <strong>no-argument constructor</strong> of the superclass. If the
      * super class does not have a no-argument constructor, you will get a
-     * compile-time error. <code>Object</code> does have such a constructor, so
-     * if <code>Object</code> is the only superclass, there is no problem.
+     * compile-time error. {@code Object} does have such a constructor, so
+     * if {@code Object} is the only superclass, there is no problem.
      * </p>
      */
     public Child() {
@@ -263,7 +262,7 @@ class Child extends OOP {
  * 
  * <ul>
  * <li>All <strong>constant values</strong> defined in an interface are
- * implicitly <code>public</code>, <code>static</code>, and <code>final</code>
+ * implicitly {@code public}, {@code static}, and {@code final}.
  * <li>A class that implements an interface must implement <strong>all</strong>
  * the methods declared in the interface.
  * </ul>
@@ -334,22 +333,22 @@ class OuterClass {
      * 
      * <p>
      * <strong>Nested classes</strong> are divided into two categories:
-     * <code>static</code> and <strong>non-static</strong>.
+     * {@code static} and <strong>non-static</strong>.
      * </p>
      * <ul>
-     * <li>Nested classes that are declared <code>static</code> are simply
+     * <li>Nested classes that are declared {@code static} are simply
      * called <strong>static nested classes</strong>.
      * <li>Non-static nested classes are called <strong>inner classes</strong>.
      * </ul>
      * 
      * <p>
-     * Nested classes can be declared <code>private</code>, <code>public</code>,
-     * <code>protected</code>, or <em>package private</em> as default.
+     * Nested classes can be declared {@code private}, {@code public},
+     * {@code protected}, or <em>package private</em> as default.
      * </p>
      * <ul>
      * <li><strong>Inner classes</strong> have access to other members of the
      * enclosing class, even if they (members of enclosing class) are declared
-     * <code>private</code>.
+     * {@code private}.
      * <li><strong>Static nested classes</strong> do <strong>NOT</strong> have
      * access to other members of the enclosing class.
      * </ul>
@@ -373,7 +372,7 @@ class OuterClass {
  * </p>
  *
  * <p>
- * Since Java does not support multiple inheritance, an <code>enum</code>
+ * Since Java does not support multiple inheritance, an {@code enum}
  * <strong>cannot extend anything else</strong>.
  * </p>
  *
@@ -384,7 +383,7 @@ enum Day {
 
     /*
      * The compiler automatically creates the constants that are defined
-     * <strong>at the beginning</strong> of the <code>enum</code> body.
+     * <strong>at the beginning</strong> of the {@code enum} body.
      */
     SUNDAY("Sun"), MONDAY("Mon"), TUESDAY("Tue"), WEDNESDAY("Wed"),
             THURSDAY("Thu"), FRIDAY("Fri"), SATURDAY("Sat");
@@ -399,13 +398,13 @@ enum Day {
      * Create an instance with abbreviation name.
      *
      * <p>
-     * The <strong>constructor</strong> for an <code>enum</code> type must be
-     * <strong>package-private</strong> or <code>private</code> access.
+     * The <strong>constructor</strong> for an {@code enum} type must be
+     * <strong>package-private</strong> or {@code private} access.
      * </p>
      *
      * <p>
      * <strong>Notes</strong>: You <strong>cannot</strong> invoke an
-     * <code>enum</code> constructor yourself.
+     * {@code enum} constructor yourself.
      * </p>
      *
      * @param abb
