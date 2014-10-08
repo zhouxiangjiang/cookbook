@@ -7,10 +7,7 @@ Python Cookbook
   - Unit Testing
   - doctest
   - Loop Techniques
-  - Unpack Iterable
   - Output Format
-  - Function Arguments
-  - OOP
   - Context Manager
   - file I/O
   - Find & Sort Algorithms
@@ -252,6 +249,41 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 '''
 
+def unpack_iterable():
+    '''Unpack N elements from iterables.
+    
+    It works with sequences, tuples, strings, files, iterators, and generators.
+    '''
+    seq = [1, 2, 3, 4, 5]
+    v1, v2, v3, v4, v5 = seq
+
+    # Skip some elements
+    v1, _, v3, _, v5 = seq
+
+    # Too many elements
+    try:
+        v1, v2, v3 = seq
+    except ValueError as err:
+        # print(err): too many values to unpack
+
+        # Python 3 "star expressions" can be used to address this problem.
+        v1, *v2, v3 = seq
+        assert isinstance(v2, list)
+
+        # Python 2.7 star parameters in function can be a replacement.
+        #def unpack3(v1, v2, *v3):
+        #    return v1, v2, v3
+        #v1, v2, v3 = unpack3(*seq)
+        #assert isinstance(v3 ,tuple)
+
+    # Too many variables
+    try:
+        v1, v2, v3, v4, v5, v6 = seq
+    except ValueError as err:
+        # print(err): need more than 5 values to unpack
+        pass
+        
+
 def func_default_value(arg, L:list=None):
     '''Default Values of Function Arguments.
 
@@ -389,6 +421,8 @@ class B(A):
 
 if __name__ == '__main__':
     print('Hello Python!')
+    
+    unpack_iterable()
     
     assert isinstance(A(), A)
     assert issubclass(B, A)
