@@ -37,6 +37,7 @@ python3 manage.py runserver <ip>:<port>
 
   - [Django](https://www.djangoproject.com/)
   - [Django 1.7 Documentation](https://docs.djangoproject.com/en/1.7/)
+  - [Django 1.7 API Reference](https://docs.djangoproject.com/en/1.7/ref/)
   
       
 Copyright (c) 2014 Li Yun <leven.cn@gmail.com>
