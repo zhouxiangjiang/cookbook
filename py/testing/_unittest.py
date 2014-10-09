@@ -11,6 +11,13 @@ facto standard unit testing framework for its respective language.
 
 To achieve this, `unittest` supports some important testing concepts:
 
+  - test fixture
+
+  > A **test fixture** represents the preparation needed to perform one or more
+  > tests, and any associate clean-up actions. This may involve, for example,
+  > creating temporary or proxy databases, directories, or starting a server
+  > process. 
+
   - test case
   
   > A **test case** is the smallest unit of testing. It checks for a specific

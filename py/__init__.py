@@ -4,8 +4,7 @@
 '''@package py
 Python Cookbook
 
-  - Unit Testing
-  - doctest
+  - Testing
   - Loop Techniques
   - Output Format
   - Context Manager
@@ -467,7 +466,7 @@ class B(A):
         
     def new_method(self):
         print('New method without inheritance from {0}'
-                .format(self.__class__.__bases__[0]))    
+                .format(self.__class__.__bases__[0]))
     
 
 if __name__ == '__main__':

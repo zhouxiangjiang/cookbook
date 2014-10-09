@@ -1,12 +1,18 @@
-#!/usr/bin/env pytho3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 '''@package py
-MyPyUnit - My own unit testing framework, based on Erich Gamma's JUnit and
-Kent Beck's Smalltalk testing framework.
+Python Testing Cookbook
 
-This module contains the core framework classes that form the basis of
-specific test cases (TestCase) and suites (TestSuite).
+  - Unit Testing
+  - doctest
+  - MyPyUnit
+  
+
+## MyPyUnit
+
+This file contains MyPyUnit - My own unit testing framework, based on Erich
+Gamma's JUnit and Kent Beck's Smalltalk testing framework.
 
 Simple Usage:
 
@@ -36,8 +42,8 @@ Acknowledge to the book "Test-Driven Development: By Examples".
 Further information is available in the bundled documentation, and from
 
     http://docs.python.org/3/library/unittest.html
-
-
+  
+  
 Copyright (c) 2014 Li Yun <leven.cn@gmail.com>
 All Rights Reserved.
 
