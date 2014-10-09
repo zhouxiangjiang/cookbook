@@ -95,7 +95,7 @@ class _UnitTestTestCase(unittest.TestCase):
     #@unittest.skip("<reason>")
     #@unittest.skipIf(<condition>, "<reason>")
     #@unittest.skipUnless(<condition>, "<reason>")
-    #@unittest.expectedFailure()
+    #@unittest.expectedFailure
     def test_func_1(self):
         # Testing
         #
