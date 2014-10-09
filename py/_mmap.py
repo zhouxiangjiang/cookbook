@@ -2,44 +2,7 @@
 # -*- coding:utf-8 -*-
 
 '''@package py
-File I/O Cookbook.
-
-By reading and writing only large chunks of data even when the user asks for a
-single byte, **buffered I/O** is designed to hide any inefficiency in calling
-and executing the operating system’s unbuffered I/O routines. The gain will
-vary very much depending on the OS and the kind of I/O which is performed (for
-example, on some contemporary OSes such as Linux, unbuffered disk I/O can be as
-fast as buffered I/O). The bottom line, however, is that buffered I/O will
-offer you predictable performance regardless of the platform and the backing
-device. Therefore, _it is most always preferable to use buffered I/O rather
-than unbuffered I/O_.
-
-The I/O system is built from layers. Text files are constructed by adding a
-text encoding/decoding layer on top of a buffered binary-mode file. The
-`buffer` attribute simply points at this underlying file. If you access it,
-you’ll bypass the text encoding/decoding layer. You could write raw bytes to a
-file opened in text mode using this technique.
-
-
-For **text I/O**, reading line by line is more common.
-
-    `for line in f`
-
-    
-For **binary I/O**,
-
-    >>> test_bin_io('_file.data')
-    2 bytearray(b'ab')
-    2 bytearray(b'cd')
-    2 bytearray(b'ef')
-    1 bytearray(b'Gf')
-    b'ab'
-    b'cdefG'
-    
-For **Memory-mapped I/O**,
-
-    >>> test_mmap('_file.data')
-    b'Hello World'
+Memory Mapped Cookbook.
 
 
 Copyright (c) 2014 Li Yun <leven.cn@gmail.com>
@@ -57,43 +20,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 '''
-
-import functools
-import sys
-
-            
-def test_bin_io(filename):
-    '''Binary I/O'''
-    # Write a binary file
-    try:
-        with open(filename, 'wb') as f:
-            f.write(b'abcdefG')
-    except IOError as e:
-        error()
-        
-    # Read fixed-size data directly into buffer without intermediate copying.
-    #
-    # Unlike `read()` method, `readinto()` method doesn't need to allocate new
-    # objects and return them, avoding making extra memory allocations.
-    size = 2
-    buf = bytearray(size)
-    try:
-        with open(filename, 'rb') as f:
-            for nbytes in iter(functools.partial(f.readinto, buf), 0):
-                print(nbytes, buf)
-    except IOError as e:
-        print('error')
-        
     
-    # Var-size
-    try:
-        with open(filename, 'rb') as f:
-            print(f.read(2))
-            print(f.read(6))
-    except IOError as e:
-        print('error')
-        
-        
 def test_mmap(filename):
     '''Memory-mapped I/O.
     
@@ -112,6 +39,12 @@ def test_mmap(filename):
     others. Obviously, some extra care is required to synchronize things, but
     this kind of approach is sometimes used as an alternative to transmitting
     data in messages over pipes or sockets.
+    
+    Usage:
+    
+        >>> test_mmap('_file.data')
+        b'Hello World'
+        
     '''
     import mmap
     import os

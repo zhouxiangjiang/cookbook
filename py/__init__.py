@@ -9,7 +9,7 @@ Python Cookbook
   - Loop Techniques
   - Output Format
   - Context Manager
-  - file I/O
+  - Memory-Mapped File
   - Find & Sort Algorithms
   - Text Pattern
   - Network
@@ -197,7 +197,7 @@ cd env-dir
 source bin/activate
 ```
 
-## Function Annotations (Python 3)
+## Function Annotations (Python 3 Only)
     
     The Python interpreter does not attach any semantic meaning to the attached
     annotations. They are not type checks, nor do they make Python behave any
@@ -220,10 +220,11 @@ source bin/activate
 
 ## PEP
 
+  - [PEP 20 -- The Zen of Python](http://legacy.python.org/dev/peps/pep-0020/)
   - [PEP 8 - Style Guide for Python Code](http://legacy.python.org/dev/peps/pep-0008/)
   - [PEP 257 - Docstring Conventions](http://legacy.python.org/dev/peps/pep-0257/)
   - [PEP 0343 - The with Statement](http://www.python.org/dev/peps/pep-0343/)
-  - [PEP 20 -- The Zen of Python](http://legacy.python.org/dev/peps/pep-0020/)
+  
 
 ## References
 
@@ -282,6 +283,56 @@ def unpack_iterable():
     except ValueError as err:
         # print(err): need more than 5 values to unpack
         pass
+        
+        
+def file_io(filename):
+    '''File I/O.
+    
+    By reading and writing only large chunks of data even when the user asks for
+    a single byte, **buffered I/O** is designed to hide any inefficiency in
+    calling and executing the operating system’s unbuffered I/O routines. The
+    gain will vary very much depending on the OS and the kind of I/O which is
+    performed (for example, on some contemporary OSes such as Linux, unbuffered
+    disk I/O can be as fast as buffered I/O). The bottom line, however, is that
+    buffered I/O will offer you predictable performance regardless of the
+    platform and the backing device. Therefore, _it is most always preferable to
+    use buffered I/O rather than unbuffered I/O_.
+    
+    The I/O system is built from layers. Text files are constructed by adding a
+    text encoding/decoding layer on top of a buffered binary-mode file. The
+    `buffer` attribute simply points at this underlying file. If you access it,
+    you’ll bypass the text encoding/decoding layer. You could write raw bytes to
+    a file opened in text mode using this technique.
+    '''
+    # Text I/O
+    try:
+        with open(filename) as f:
+            for line in f:
+                print(line)
+    except IOError as err:
+        print(err)
+        
+    # Read fixed-size data directly into buffer without intermediate copying.
+    #
+    # Unlike `read()` method, `readinto()` method doesn't need to allocate new
+    # objects and return them, avoiding making extra memory allocations.
+    import functools
+    size = 2
+    buf = bytearray(size)
+    try:
+        with open(filename, 'rb') as f:
+            for nbytes in iter(functools.partial(f.readinto, buf), 0):
+                print(nbytes, buf)
+    except IOError as err:
+        print(err)
+        
+    # Read var-size binary file.
+    try:
+        with open(filename, 'rb') as f:
+            print(f.read(2))
+            print(f.read(6))
+    except IOError as err:
+        print(err)
         
 
 def func_default_value(arg, L:list=None):
