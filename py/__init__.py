@@ -266,15 +266,9 @@ def unpack_iterable():
     except ValueError as err:
         # print(err): too many values to unpack
 
-        # Python 3 "star expressions" can be used to address this problem.
+        # "star expressions" in Python 3
         v1, *v2, v3 = seq
         assert isinstance(v2, list)
-
-        # Python 2.7 star parameters in function can be a replacement.
-        #def unpack3(v1, v2, *v3):
-        #    return v1, v2, v3
-        #v1, v2, v3 = unpack3(*seq)
-        #assert isinstance(v3 ,tuple)
 
     # Too many variables
     try:
