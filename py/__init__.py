@@ -213,7 +213,7 @@ source bin/activate
     
     For example:
 
-        def f(x:int, y:int) --> int:
+        def f(x:int, y:int) -> int:
             return x + y
 
 
@@ -228,9 +228,12 @@ source bin/activate
 
 ## References
 
+  - Why I Love Python (2001)
   - [Think Python](http://www.greenteapress.com/thinkpython/html/index.html)
   - [Python 3 Documentation](https://docs.python.org/3/)
-  - [Django](https://www.djangoproject.com/)
+  - Core Python Programming, 2nd Edition (2009)
+  - Core Python Applications Programming, 3rd Edition (2012)
+  - Python Cookbook, 3rd Edition (2013)
   
       
 Copyright (c) 2014 Li Yun <leven.cn@gmail.com>

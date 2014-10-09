@@ -35,8 +35,8 @@ python3 manage.py runserver <ip>:<port>
 
 ## References
 
-  - [Python 3 Documentation](https://docs.python.org/3/)
   - [Django](https://www.djangoproject.com/)
+  - [Django 1.7 Documentation](https://docs.djangoproject.com/en/1.7/)
   
       
 Copyright (c) 2014 Li Yun <leven.cn@gmail.com>
@@ -66,6 +66,9 @@ if __name__ == '__main__':
             # Install Django
             subprocess.check_call('sudo pip3 install --upgrade django',
                     shell=True)
+            django_version = subprocess.check_output('django-admin version',
+                    shell=True)
+            print('Django {0}'.format(django_version.strip().decode()))
                     
         else:
             # Create a Django project
@@ -74,5 +77,6 @@ if __name__ == '__main__':
                     shell=True)
             os.chdir(project_name)
             subprocess.check_call('python3 manage.py migrate', shell=True)
+    else:
+        print('Hello Django!')
     
-    print('Hello Django!')
