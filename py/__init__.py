@@ -16,16 +16,6 @@ Python Cookbook
   - Django (Web framework)
   
 
-## Getting Started
-
-```bash
-# Debian/Ubuntu
-sudo apt-get update
-sudo apt-get install python3 python3-pip python3-dev build-essential
-sudo pip3 install --upgrade virtualenv
-```
-  
-
 ## Command Line Options
 
     `-t`  Issue a warning when a source file mixes tabs and spaces for indentation in a way that
@@ -473,6 +463,12 @@ class B(A):
     
 
 if __name__ == '__main__':
+    # Install Python 3
+    import subprocess
+    subprocess.check_call('sudo apt-get update', shell=True)
+    subprocess.check_call('sudo apt-get install \
+            python3 python3-pip python3-dev build-essential', shell=True)
+    subprocess.check_call('sudo pip3 install --upgrade virtualenv', shell=True)
     print('Hello Python!')
     
     unpack_iterable()

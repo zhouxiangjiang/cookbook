@@ -10,14 +10,6 @@ Django Cookbook
 ## Getting Started
 
 ```bash
-# Setup
-sudo pip3 install --upgrade django
-
-# Create Project
-django-admin.py startproject <site-name>
-cd <site-name>
-python3 manage.py migrate
-
 # Static files
 # Add STATIC_ROOT of <site-name>/settings.py
 python3 manage.py collectstatic
@@ -64,4 +56,23 @@ POSSIBILITY OF SUCH DAMAGE.
 '''
 
 if __name__ == '__main__':
+    import sys
+    
+    if len(sys.argv) > 1:
+        import subprocess
+        import os
+        
+        if sys.argv[1] == 'init':
+            # Install Django
+            subprocess.check_call('sudo pip3 install --upgrade django',
+                    shell=True)
+                    
+        else:
+            # Create a Django project
+            project_name = sys.argv[1]
+            subprocess.check_call('django-admin startproject ' + project_name,
+                    shell=True)
+            os.chdir(project_name)
+            subprocess.check_call('python3 manage.py migrate', shell=True)
+    
     print('Hello Django!')
