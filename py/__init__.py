@@ -238,7 +238,6 @@ source bin/activate
 ## References
 
   - [Think Python](http://www.greenteapress.com/thinkpython/html/index.html)
-  - [Python 2 Documentation](https://docs.python.org/2/)
   - [Python 3 Documentation](https://docs.python.org/3/)
   - [Django](https://www.djangoproject.com/)
   
