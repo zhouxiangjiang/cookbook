@@ -17,7 +17,10 @@ python3 manage.py collectstatic
 # Create App
 python3 manage.py startapp <app-name>
 # Add <app-name> into INSTALLED_APPS of <site-name>/settings.py
+
+# Update Models: <app-name>/models.py
 python3 manage.py makemigrations <app-name>
+python3 manage.py migrate
 
 # Django Shell
 python3 manage.py shell
@@ -25,11 +28,7 @@ python3 manage.py shell
 # Django Admin User
 python3 manage.py createsuperuser
 
-# Update Models
-python3 manage.py makemigrations <app-name>
-python3 manage.py migrate
-
-# Testing
+# Testing Server
 python3 manage.py runserver <ip>:<port>
 ```
 
