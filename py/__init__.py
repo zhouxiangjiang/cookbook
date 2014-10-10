@@ -4,15 +4,11 @@
 '''@package py
 Python Cookbook
 
-  - Unit Testing
-  - doctest
+  - Testing
   - Loop Techniques
-  - Unpack Iterable
   - Output Format
-  - Function Arguments
-  - OOP
   - Context Manager
-  - file I/O
+  - Memory-Mapped File
   - Find & Sort Algorithms
   - Text Pattern
   - Network
@@ -200,20 +196,44 @@ cd env-dir
 source bin/activate
 ```
 
+## Function Annotations (Python 3 Only)
+    
+    The Python interpreter does not attach any semantic meaning to the attached
+    annotations. They are not type checks, nor do they make Python behave any
+    differently than it did before. However, they might give useful hints to
+    others reading the source code about what you had in mind. Third-party
+    tools and frameworks might also attach semantic meaning to the annotations.
+    
+    Although you can attach any kind of object to a function as an annotation
+    (e.g., numbers, strings, instances, etc.), classes or strings often seem to
+    make the most sense.
+    
+    Function annotations are merely stored in a function’s `__annotations__`
+    attribute.
+    
+    For example:
+
+        def f(x:int, y:int) -> int:
+            return x + y
+
 
 ## PEP
 
+  - [PEP 20 -- The Zen of Python](http://legacy.python.org/dev/peps/pep-0020/)
   - [PEP 8 - Style Guide for Python Code](http://legacy.python.org/dev/peps/pep-0008/)
   - [PEP 257 - Docstring Conventions](http://legacy.python.org/dev/peps/pep-0257/)
   - [PEP 0343 - The with Statement](http://www.python.org/dev/peps/pep-0343/)
-  - [PEP 20 -- The Zen of Python](http://legacy.python.org/dev/peps/pep-0020/)
+  - [PEP 440 - Version Identification and Dependency Specification](http://legacy.python.org/dev/peps/pep-0440/)
+  
 
 ## References
 
+  - Why I Love Python (2001)
   - [Think Python](http://www.greenteapress.com/thinkpython/html/index.html)
-  - [Python 2 Documentation](https://docs.python.org/2/)
   - [Python 3 Documentation](https://docs.python.org/3/)
-  - [Django](https://www.djangoproject.com/)
+  - Core Python Programming, 2nd Edition (2009)
+  - Core Python Applications Programming, 3rd Edition (2012)
+  - Python Cookbook, 3rd Edition (2013)
   
       
 Copyright (c) 2014 Li Yun <leven.cn@gmail.com>
@@ -232,5 +252,230 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 '''
 
+def unpack_iterable():
+    '''Unpack N elements from iterables.
+    
+    It works with sequences, tuples, strings, files, iterators, and generators.
+    '''
+    seq = [1, 2, 3, 4, 5]
+    v1, v2, v3, v4, v5 = seq
+
+    # Skip some elements
+    v1, _, v3, _, v5 = seq
+
+    # Too many elements
+    try:
+        v1, v2, v3 = seq
+    except ValueError as err:
+        # print(err): too many values to unpack
+
+        # "star expressions" in Python 3
+        v1, *v2, v3 = seq
+        assert isinstance(v2, list)
+
+    # Too many variables
+    try:
+        v1, v2, v3, v4, v5, v6 = seq
+    except ValueError as err:
+        # print(err): need more than 5 values to unpack
+        pass
+        
+        
+def file_io(filename):
+    '''File I/O.
+    
+    By reading and writing only large chunks of data even when the user asks for
+    a single byte, **buffered I/O** is designed to hide any inefficiency in
+    calling and executing the operating system’s unbuffered I/O routines. The
+    gain will vary very much depending on the OS and the kind of I/O which is
+    performed (for example, on some contemporary OSes such as Linux, unbuffered
+    disk I/O can be as fast as buffered I/O). The bottom line, however, is that
+    buffered I/O will offer you predictable performance regardless of the
+    platform and the backing device. Therefore, _it is most always preferable to
+    use buffered I/O rather than unbuffered I/O_.
+    
+    The I/O system is built from layers. Text files are constructed by adding a
+    text encoding/decoding layer on top of a buffered binary-mode file. The
+    `buffer` attribute simply points at this underlying file. If you access it,
+    you’ll bypass the text encoding/decoding layer. You could write raw bytes to
+    a file opened in text mode using this technique.
+    '''
+    # Text I/O
+    try:
+        with open(filename) as f:
+            for line in f:
+                print(line)
+    except IOError as err:
+        print(err)
+        
+    # Read fixed-size data directly into buffer without intermediate copying.
+    #
+    # Unlike `read()` method, `readinto()` method doesn't need to allocate new
+    # objects and return them, avoiding making extra memory allocations.
+    import functools
+    size = 2
+    buf = bytearray(size)
+    try:
+        with open(filename, 'rb') as f:
+            for nbytes in iter(functools.partial(f.readinto, buf), 0):
+                print(nbytes, buf)
+    except IOError as err:
+        print(err)
+        
+    # Read var-size binary file.
+    try:
+        with open(filename, 'rb') as f:
+            print(f.read(2))
+            print(f.read(6))
+    except IOError as err:
+        print(err)
+        
+
+def func_default_value(arg, L:list=None):
+    '''Default Values of Function Arguments.
+
+    The default values are evaluated at the point of function definition in
+    the defining scope only once.
+
+    **NOTE**: When the default is a mutable object such as a list, dictionary,
+    or instances of most classes, and if you don't want the default to be
+    shared between subsequent calls, you can write the function like this
+    instead.
+    '''
+    if L is None:
+        L = []
+    L.append(arg)
+    return L
+    
+    
+def func_unpack_args(arg1, arg2):
+    '''Unpack arguments from dictionary, tuple, or list.
+    
+    From dictionary,
+    
+        mydict = {'arg1': 1, 'arg2': 2}
+        func_unpack_args(**mydict)
+    
+    From tuple or list,
+    
+        mytuple = ("a", "b")
+        func_unpack_args(*mytuple)
+    
+    '''
+    pass
+    
+    
+def func_vargs(arg, other='o', *vargs, **args):
+    '''Variable Length Arguments List of Function.
+
+    1. `*vargs` must be before `**args`.
+
+    2. Any formal parameters which occur after the `*vargs` parameter are
+       keyword-only arguments, meaning that they can only be used as keywords
+       rather than positional arguments.
+
+    '''
+    # All parameters of `vargs` argument will be wrapped up in a tuple
+    for param in vargs:
+        # handle `*vargs`
+        pass
+
+    # All parameters of `args` argument will be wrapped up in an OrderedDict
+    # class
+    for key, value in args.items():
+        # handle `**args`
+        pass
+
+    
+class A(object):
+    '''A class.
+    
+    # Built-in Class Attributes:
+    - __name__   : string name of class
+    - __doc__    : documentation string
+    - __bases__  : tuple of class's base classes
+    - __slots__  : list of attribute names (reduce memory)
+    
+    # Built-in Instance Attributes:
+    - __doc__    : documentation string
+    - __class__  : class for instance
+    - __module__ : module where class is defined
+    
+    # Built-in Methods:
+    - __init__() : constructor
+    - __str__()  : string representation, str(obj)
+    - __len__()  : length, len(obj)
+    
+        # Context Manager
+        - __enter__()
+        - __exit__()
+    
+        # Iterator
+        - __iter__()
+        - __next__()
+        - __reversed__()
+    
+    '''
+
+    # Python does not provide any internal mechanism track how many instances
+    # of a class have been created or to keep tabs on what they are. The best
+    # way is to keep track of the number of instances using a class attribute.
+    num_of_instances = 0
+
+    def __init__(self, a1=None, a2=None):
+        A.num_of_instances += 1
+        self.public_instance_attribute = a1
+        self.private_instance_attribute = a2
+        
+
+    def public_instance_method(self):
+        return (A.num_of_instances,
+                self.publuc_instance_attribute,
+                self.private_instance_attribute)
+                
+    
+    def _private_instance_method(self):
+        pass
+        
+
+    @staticmethod
+    def static_method():
+        return A.num_of_instances
+        
+
+    @classmethod
+    def class_method(cls):
+        return cls.__name__
+        
+        
+class B(A):
+    '''Subclass of A.    
+    '''
+
+    def __init__(self, b, a1=None, a2=None):
+        super(B, self).__init__(a1, a2)
+        self.b = b
+        
+        
+    def public_instance_method(self):
+        print('Override method of {0}'.format(self.__class__.__bases__[0]))
+        
+        
+    def new_method(self):
+        print('New method without inheritance from {0}'
+                .format(self.__class__.__bases__[0]))
+    
+
 if __name__ == '__main__':
+    # Install Python 3
+    import subprocess
+    subprocess.check_call('sudo apt-get update', shell=True)
+    subprocess.check_call('sudo apt-get install \
+            python3 python3-pip python3-dev build-essential', shell=True)
+    subprocess.check_call('sudo pip3 install --upgrade virtualenv', shell=True)
     print('Hello Python!')
+    
+    unpack_iterable()
+    
+    assert isinstance(A(), A)
+    assert issubclass(B, A)
