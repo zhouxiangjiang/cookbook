@@ -6,8 +6,6 @@ Python Cookbook
 
   - Testing
   - Loop Techniques
-  - Output Format
-  - Context Manager
   - Memory-Mapped File
   - Find & Sort Algorithms
   - Text Pattern
@@ -251,6 +249,36 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 '''
 
+def float_format():
+    f = 12345.678
+    assert format(f, '0.2f') == '12345.68' # two-digits accuracy
+    assert format(f, '>10.2f') == '  12345.68' # right justified
+    assert format(f, '<10.2f') == '12345.68  ' # left justified
+    assert format(f, '^10.2f') == ' 12345.68 ' # centred
+    assert format(f, ',') == '12,345.678' # thousands separator
+    assert format(f, '0,.2f') == '12,345.68' # # thousands separator
+    assert format(f, 'e') == '1.234568e+04' # exponential notation
+    assert format(f, '0.2E') == '1.23E+04' # exponential notation
+    
+    
+def int_format():
+    i = 2
+    assert bin(i) == '0b10' == format(i, '#b') # binary prefix
+    assert format(i, 'b') == '10' # binary digit
+    assert format(i, '08b') == '00000010' # binary padding
+    assert format(i, '#010b') == '0b00000010' # binary prefix & padding
+    
+    assert hex(i) == '0x2' == format(i, '#x') # hex prefix
+    assert format(i, 'x') == '2' # hex digit
+    assert format(i, '02x') == '02' # hex padding
+    assert format(i, '#04x') == '0x02' # hex prefix & padding
+    
+    assert oct(i) == '0o2' == format(i, '#o') # Python 2: oct(i) == '02'
+    assert format(i, 'o') == '2' # hex digit
+    assert format(i, '03o') == '002' # hex padding
+    assert format(i, '#05o') == '0o002' # hex prefix & padding
+    
+    
 def unpack_iterable():
     '''Unpack N elements from iterables.
     
@@ -604,6 +632,10 @@ if __name__ == '__main__':
     #        python3 python3-pip python3-dev build-essential', shell=True)
     #subprocess.check_call('sudo pip3 install --upgrade virtualenv', shell=True)
     print('Hello Python!')
+    
+    # Formatting Output
+    float_format()
+    int_format()
     
     unpack_iterable()
     
