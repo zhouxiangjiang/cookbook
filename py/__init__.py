@@ -222,7 +222,6 @@ source bin/activate
   - [PEP 20 -- The Zen of Python](http://legacy.python.org/dev/peps/pep-0020/)
   - [PEP 8 - Style Guide for Python Code](http://legacy.python.org/dev/peps/pep-0008/)
   - [PEP 257 - Docstring Conventions](http://legacy.python.org/dev/peps/pep-0257/)
-  - [PEP 0343 - The with Statement](http://www.python.org/dev/peps/pep-0343/)
   - [PEP 440 - Version Identification and Dependency Specification](http://legacy.python.org/dev/peps/pep-0440/)
   
 
@@ -267,7 +266,7 @@ def unpack_iterable():
     try:
         v1, v2, v3 = seq
     except ValueError as err:
-        # print(err): too many values to unpack
+        assert str(err) == 'too many values to unpack (expected 3)'
 
         # "star expressions" in Python 3
         v1, *v2, v3 = seq
@@ -277,8 +276,7 @@ def unpack_iterable():
     try:
         v1, v2, v3, v4, v5, v6 = seq
     except ValueError as err:
-        # print(err): need more than 5 values to unpack
-        pass
+        assert str(err) == 'need more than 5 values to unpack'
         
         
 def file_io(filename):
@@ -464,18 +462,152 @@ class B(A):
     def new_method(self):
         print('New method without inheritance from {0}'
                 .format(self.__class__.__bases__[0]))
+                
+                
+def context_manager():
+    '''Context Manager.
+    
+    Python’s `with` statement supports the concept of a runtime context defined
+    by a _context manager_. This is implemented using two separate methods
+    (`__enter__()`, and `__exit__()`) that allow user-defined classes to define
+    a runtime context that is entered before the statement body is executed and
+    exited when the statement ends.
+    
+    @see http://www.python.org/dev/peps/pep-0343/
+    @see contextlib
+    '''
+    # contextlib.suppress(*exception)
+    #
+    # Replace `try-except-pass`:
+    #
+    #     try:
+    #         os.remove('not-exists')
+    #     except FileNotFoundError:
+    #         pass
+    #
+    # **NOTE**: This context manager is *reentrant*.
+    # @since Python 3.4
+    from contextlib import suppress
+    import os
+    with suppress(FileNotFoundError):
+        os.remove('not-exists')
+                
+        
+    from contextlib import contextmanager
+    @contextmanager
+    def closing(thing):
+        '''Reference implementation of contextlib.closing().
+        
+        @see contextlib#closing()
+        '''
+        try:
+            yield thing
+        finally:
+            thing.close()
+            
+            
+    # contextlib.ExitStack
+    #
+    # Replace `try-finally`:
+    #
+    #     cleanup_needed = True
+    #     def do():
+    #         return False
+    #     def cleanup():
+    #         pass
+    #     try:
+    #         result = do()
+    #         if result:
+    #             cleanup_needed = False
+    #     finally:
+    #         if cleanup_needed:
+    #             cleanup()
+    #
+    # @since Python 3.3
+    from contextlib import ExitStack
+    def do():
+        return False
+    def cleanup():
+        pass
+    with ExitStack() as stack:
+        stack.callback(cleanup)
+        result = do()
+        if result:
+            stack.pop_all()
+            
+            
+    # contextlib.ContextDecorator
+    #
+    # Replace:
+    #
+    #     class MyContextManager(object):
+    #         def __init__(self):
+    #             # initialization here ...
+    #             # if error, raise Exception.
+    #             pass
+    #
+    #        
+    #         def close(self):
+    #             # clearing context here ...
+    #             pass
+    #
+    #
+    #         def do(self):
+    #             # do something here ...
+    #             # if error, raise Exception.
+    #             pass
+    #
+    #     
+    #         def __enter__(self):
+    #            return self
+    #
+    # 
+    #         def __exit__(self, etype, evalue, traceback):
+    #            if etype is not None:
+    #                print(etype, evalue, traceback)
+    #                self.close()
+    #
+    # @since Python 3.2
+    from contextlib import ContextDecorator
+    stack = []
+    class mycontext(ContextDecorator):
+        def __enter__(self):
+            stack.append('Enter')
+            return self
+        def __exit__(self, *exc): # etype, evalue, traceback
+            stack.append('Exit')
+            return False
+    @mycontext()
+    def mycontextfunc():
+        stack.append('Do')
+    mycontextfunc()
+    assert stack == ['Enter', 'Do', 'Exit']
+            
+            
+    # contextlib.redirect_stdout(new_file)
+    #
+    # **NOTE**: This context manager is *reusable* but *not reentrant*.
+    # @since Python 3.4
+    from contextlib import redirect_stdout
+    import io
+    f = io.StringIO()
+    with redirect_stdout(f):
+        help(io)
+    s = f.getvalue()
     
 
 if __name__ == '__main__':
     # Install Python 3
     import subprocess
-    subprocess.check_call('sudo apt-get update', shell=True)
-    subprocess.check_call('sudo apt-get install \
-            python3 python3-pip python3-dev build-essential', shell=True)
-    subprocess.check_call('sudo pip3 install --upgrade virtualenv', shell=True)
+    #subprocess.check_call('sudo apt-get update', shell=True)
+    #subprocess.check_call('sudo apt-get install \
+    #        python3 python3-pip python3-dev build-essential', shell=True)
+    #subprocess.check_call('sudo pip3 install --upgrade virtualenv', shell=True)
     print('Hello Python!')
     
     unpack_iterable()
     
     assert isinstance(A(), A)
     assert issubclass(B, A)
+    
+    context_manager()
