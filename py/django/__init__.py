@@ -5,6 +5,7 @@
 Django Cookbook
 
   - Getting Started
+  - App
   
 
 ## Getting Started
@@ -18,10 +19,6 @@ python3 manage.py collectstatic
 python3 manage.py startapp <app-name>
 # Add <app-name> into INSTALLED_APPS of <site-name>/settings.py
 
-# Update Models: <app-name>/models.py
-python3 manage.py makemigrations <app-name>
-python3 manage.py migrate
-
 # Django Shell
 python3 manage.py shell
 
@@ -31,6 +28,19 @@ python3 manage.py createsuperuser
 # Testing Server
 python3 manage.py runserver <ip>:<port>
 ```
+
+## App
+
+**STEP 1**: Update models in `<app-name>/models.py`
+
+```bash
+python3 manage.py makemigrations <app-name>
+python3 manage.py migrate
+```
+
+**STEP 2**: Update views in `<app-name>/views.py`
+
+**STEP 3**: Map views to URLs in `<app-name>/urls.py` and `<site-name>/urls.py`
 
 ## References
 
