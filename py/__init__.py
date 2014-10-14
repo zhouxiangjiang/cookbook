@@ -6,7 +6,7 @@ Python Cookbook
 
   - Testing
   - Memory-Mapped File
-  - Find & Sort Algorithms
+  - Find Algorithms
   - Network
   - Thread
   - Django (Web framework)
@@ -267,9 +267,7 @@ def loop():
     
     @see enumerate()
     @see zip()
-    @see itertools.zip_longest()
-    @see itertools.chain()
-    @see itertools.islice
+    @see itertools
     '''
     seq = [1, 2, 3]
     seq2 = ['a', 'b']
@@ -869,6 +867,7 @@ def re_pattern():
     \A - ^
     \Z - $
     
+    @see re    
     '''
     import re
     
@@ -968,15 +967,96 @@ def shell_pattern():
     # Filter
     assert fnmatch.filter(['a.txt','b.txt', 'c.log'], '*.txt') == \
             ['a.txt','b.txt']
+            
+            
+def sort_algorithm():
+    '''Sort Algorithms.
+    
+    The reference implementation of `operator.itemgetter()`:
+
+        def itemgetter(*items):
+            if len(items) == 1:
+                item = items[0]
+                def g(obj):
+                    return obj[item]
+            else:
+                def g(obj):
+                    return tuple(obj[item] for item in items)
+            return g
+            
+    The reference implementation of `operator.attrgetter()`:
+
+        def attrgetter(*items):
+            if len(items) == 1:
+                attr = items[0]
+                def g(obj):
+                    return resolve_attr(obj, attr)
+            else:
+                def g(obj):
+                    return tuple(resolve_attr(obj, attr) for attr in items)
+            return g
+        def resolve_attr(obj, attr):
+            for name in attr.split("."):
+                obj = getattr(obj, name)
+            return obj
+        
+    @see sorted()
+    @see operator.itemgetter()
+    @see operator.attrgetter()
+    '''
+    import operator
+
+    d = [
+        {'name': 'b', 'value': 3},
+        {'name': 'a', 'value': 2},
+        {'name': 'c', 'value': 1}
+    ]
+
+    # Sort a list of dictionaries by name
+    assert sorted(d, key=operator.itemgetter('name')) == [
+        {'name': 'a', 'value': 2},
+        {'name': 'b', 'value': 3},
+        {'name': 'c', 'value': 1}
+    ]
+
+    # Sort a list of dictionaries by value
+    assert sorted(d, key=operator.itemgetter('value')) == [
+        {'name': 'c', 'value': 1},
+        {'name': 'a', 'value': 2},
+        {'name': 'b', 'value': 3}
+    ]
+
+    # Sort a list of dictionaries by two keys
+    d = [
+        {'name': 'b', 'v': 3, 'v2': 2},
+        {'name': 'a', 'v': 3, 'v2': 1},
+        {'name': 'c', 'v': 2, 'v2': 3}
+    ]
+
+    assert sorted(d, key=operator.itemgetter('v', 'v2')) == [
+        {'name': 'c', 'v': 2, 'v2': 3},
+        {'name': 'a', 'v': 3, 'v2': 1},
+        {'name': 'b', 'v': 3, 'v2': 2}
+    ]
+
+    # Sort objects without native comparison support 
+    class App:
+        def __init__(self, id):
+            self.id = id
+    apps = [App(1), App(2), App(3)]
+    assert sorted(apps, key=operator.attrgetter('id'))
     
 
 if __name__ == '__main__':
-    # Install Python 3
-    import subprocess
-    #subprocess.check_call('sudo apt-get update', shell=True)
-    #subprocess.check_call('sudo apt-get install \
-    #        python3 python3-pip python3-dev build-essential', shell=True)
-    #subprocess.check_call('sudo pip3 install --upgrade virtualenv', shell=True)
+    import sys
+    if len(sys.argv) != 1 and sys.argv[1] == 'install-python':
+        # Install Python 3
+        import subprocess
+        subprocess.check_call('sudo apt-get update', shell=True)
+        subprocess.check_call('sudo apt-get install \
+                python3 python3-pip python3-dev build-essential', shell=True)
+        subprocess.check_call('sudo pip3 install --upgrade virtualenv',
+                shell=True)
     print('Hello Python!')
     
     # Loop technique
@@ -996,3 +1076,5 @@ if __name__ == '__main__':
     # Text Pattern
     re_pattern()
     shell_pattern()
+    
+    sort_algorithm()
