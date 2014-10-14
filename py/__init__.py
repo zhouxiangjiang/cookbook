@@ -249,7 +249,230 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 '''
 
+def loop():
+    '''Loop technique.
+    
+    Case 1: To change a sequence you are iterating over while inside the loop
+    (for example to duplicate certain items), it is recommended that you first
+    make a copy.
+    
+        assert isinstance(words, list)
+        for word in words[:]:  # Loop over a slice copy of the entire list.
+            if len(word) > 6:
+                words.insert(0, word)
+            
+    Case 2: Loop over dictionaries.
+    
+        assert isinstance(mydict, dict)
+        for key, value in mydict.items(): # Python 2: mydict.iteritems()
+            pass
+    
+    @see enumerate()
+    @see zip()
+    @see itertools.zip_longest()
+    @see itertools.chain()
+    @see itertools.islice
+    '''
+    seq = [1, 2, 3]
+    seq2 = ['a', 'b']
+    start_index = 1
+    seq_tmp = []
+    
+    # enumerate()
+    for index, value in enumerate(seq):
+        assert index in range(len(seq))
+        assert seq[index] == value
+    for index, value in enumerate(seq, start=start_index):
+        assert index-start_index in range(len(seq))
+        assert seq[index-start_index] == value
+        
+    # Multiple containers simultaneously.
+    #
+    # zip(), itertools.zip_longest()
+    # Python 2: itertools.izip_longest()
+    for value1, value2 in zip(seq, seq2):
+        assert value1 in seq
+        assert value2 in seq2
+        assert seq.index(value1) == seq2.index(value2)
+    import itertools
+    for value1, value2 in itertools.zip_longest(seq, seq2):
+        assert value1 in seq
+        if value2 not in seq2:
+            assert value2 is None and seq.index(value1) == len(seq) - 1
+    fillvalue = 0
+    for value1, value2 in itertools.zip_longest(seq, seq2, fillvalue=fillvalue):
+        assert value1 in seq
+        if value2 not in seq2:
+            assert value2 is fillvalue and seq.index(value1) == len(seq) - 1
+        
+    # itertools.chain()
+    #
+    # Join multiple containers with avoiding nested loops without losing the
+    # readability of the code.
+    #
+    # Reference implementation of `chain()`:
+    #
+    #     def chain(iterators):
+    #         for i in iterators:
+    #             yield from i
+    #
+    for item in itertools.chain(seq, seq2):
+        assert item in seq or item in seq2
+        
+    def my_generator(n):
+        '''Generator
+
+        Python’s _generators_ provide a convenient way to implement the
+        _iterator_ protocol. If a container object’s `__iter__()` method is
+        implemented as a _generator_, it will automatically return an _iterator_
+        object (technically, a _generator_ object) supplying the `__iter__()`
+        and `next()` methods.
+        
+        Replace infinitive while loop with an iterator:
+
+            while True:
+                a = get()
+                if a == b:
+                    break
+            set(a)
+        
+                ||
+                \/
+        
+            for a in iter(lambda: get(), b):
+                set(a)
+
+        The `yield` keyword could be implemented by _iterators_.
+        
+            # My iterator.
+            #
+            # Python supports a concept of iteration over containers. This is
+            # implemented using two distinct methods (`__iter__()`, and
+            # `next()`); these are used to allow user-defined classes to support
+            # iteration.
+            class MyIterator(object):
+        
+                def __init__(self, seq):
+                    self._container = seq
+                    self._index = -1
+        
+                def __iter__(self):
+                    return iter(self._container)
+    
+                def __next__(self):
+                    if self._index == len(self._container) - 1:
+                        raise StopIteration
+                    self._index += 1
+                    return self._container[self._index]
+            
+                def __reversed__(self):
+                    pass
+        
+        '''
+        while True:
+            yield n
+            n += 1
+    container = []
+    for i in my_generator(0):
+        if len(container) == 3:
+            break
+        container.append(i)
+    assert container == [0, 1, 2]
+    assert type(my_generator).__name__ == 'function'
+    assert type(my_generator(10)).__name__ == 'generator'
+    import types
+    assert isinstance(my_generator, types.FunctionType)
+    assert isinstance(my_generator(10), types.GeneratorType)
+    
+    # Iterator/Generator Slicing
+    #
+    # **NOTE**: It’s important to emphasize that `islice()` will consume data
+    # on the supplied iterator. Since iterators can’t be rewound, that is
+    # something to consider. If it’s important to go back, you should probably
+    # just turn the data into a list first.
+    for item in itertools.islice(my_generator(0), 5, 9):
+        assert item in [5 ,6 ,7, 8]
+        
+    # Permutations & Combinations
+    for item in itertools.permutations(seq):
+        assert item in (
+            (1, 2, 3),
+            (1, 3, 2),
+            (2, 1, 3),
+            (2, 3, 1),
+            (3, 1, 2),
+            (3, 2, 1)
+        )
+    for item in itertools.permutations(seq, 2):
+        assert item in (
+            (1, 2),
+            (1, 3),
+            (2, 1),
+            (2, 3),
+            (3, 1),
+            (3, 2)
+        )
+    for item in itertools.combinations(seq, 3):
+        assert item in (
+            (1, 2, 3),
+        )
+    for item in itertools.combinations(seq, 2):
+        assert item in (
+            (1, 2),
+            (1, 3),
+            (2, 3)
+        )
+    for item in itertools.combinations_with_replacement(seq, 3):
+        assert item in (
+            (1, 1, 1),
+            (1, 1, 2),
+            (1, 1, 3),
+            (1, 2, 2),
+            (1, 2, 3),
+            (1, 3, 3),
+            (2, 2, 2),
+            (2, 2, 3),
+            (2, 3, 3),
+            (3, 3, 3)
+        )
+        
+    # The easiest way to filter a sequence data is often to use a list (or
+    # dictionary, tuple, etc.) comprehension.
+    l = [1, 3, 5, -2, 0, 8]
+    assert [i for i in l if i > 0] == [1, 3, 5, 8]
+    assert [i if i > 0 else 0 for i in l] == [1, 3, 5, 0, 0, 8]
+    d = {'A': 1, 'B': 2, 'C': 3}
+    assert {key: value for key, value in d.items() if value > 1} == \
+            {'B': 2, 'C': 3}  # Python 2: d.iteritems()
+            
+    # One potential downside of using a list comprehension is that it might
+    # produce a large result if the original input is large. If this is a
+    # concern, generator expression could be used to produce the filtered
+    # values iteratively.
+    for i in (i for i in l if i > 0):
+        pass
+        
+    # Sometimes, the filtering criteria cannot be easily expressed in a list
+    # comprehension or generator expression. For example, suppose that the
+    # filtering process involves exception handling or some other complicated
+    # detail.
+    #
+    # NOTE: the `filter()` returns a list in python 2, and an iterable in
+    # Python 3.
+    def is_int(val):
+        try:
+            int(val)
+            return True
+        except ValueError:
+            return False
+    assert list(filter(is_int, ['1', '-', '2', 'N/A', '-'])) == ['1', '2']
+
+        
 def float_format():
+    '''Float number formatting.
+    
+    @see format()
+    '''
     f = 12345.678
     assert format(f, '0.2f') == '12345.68' # two-digits accuracy
     assert format(f, '>10.2f') == '  12345.68' # right justified
@@ -262,6 +485,13 @@ def float_format():
     
     
 def int_format():
+    '''int type formatting.
+    
+    @see format()
+    @see bin()
+    @see hex()
+    @see oct()
+    '''
     i = 2
     assert bin(i) == '0b10' == format(i, '#b') # binary prefix
     assert format(i, 'b') == '10' # binary digit
@@ -431,16 +661,6 @@ class A(object):
     - __init__() : constructor
     - __str__()  : string representation, str(obj)
     - __len__()  : length, len(obj)
-    
-        # Context Manager
-        - __enter__()
-        - __exit__()
-    
-        # Iterator
-        - __iter__()
-        - __next__()
-        - __reversed__()
-    
     '''
 
     # Python does not provide any internal mechanism track how many instances
@@ -632,6 +852,9 @@ if __name__ == '__main__':
     #        python3 python3-pip python3-dev build-essential', shell=True)
     #subprocess.check_call('sudo pip3 install --upgrade virtualenv', shell=True)
     print('Hello Python!')
+    
+    # Loop technique
+    loop()
     
     # Formatting Output
     float_format()
