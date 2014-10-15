@@ -1,14 +1,15 @@
 cookbook
 ========
 
-Python/Java/C Cookbook
+Python/Web/Java/C Cookbook
 
 ## Getting Started
 
 1. [VirtualBox](https://www.virtualbox.org/) + [Ubuntu](http://www.ubuntu.com/)
-2. [Ubuntu Doc](https://help.ubuntu.com/)
-3. The Linux Command Line (2012)
-4. The Linux Command Line, 2nd Edition (2013)
+2. Windows: [Putty](http://www.putty.org/) + [WinSCP](http://winscp.net/) + [Notepad++](http://notepad-plus-plus.org/)
+3. [Ubuntu Doc](https://help.ubuntu.com/)
+4. The Linux Command Line (2012)
+5. The Linux Command Line, 2nd Edition (2013)
 
 ### Basic
 
