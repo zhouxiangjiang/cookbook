@@ -3,6 +3,10 @@ cookbook
 
 Python/Web/Java/C Cookbook
 
+ - [Getting Started](#getting-started)
+ - [Bash](#bash)
+ - [Regular Expression](#regular-expression)
+
 ## Getting Started
 
 1. [VirtualBox](https://www.virtualbox.org/) + [Ubuntu](http://www.ubuntu.com/)
