@@ -20,16 +20,6 @@ limitations under the License.
 '''
 
 import subprocess
-
-
-## ly error
-class LyError(Exception):
-    def __init__(self, e):
-        self.error = e
-
-    
-    def __str__(self):
-        return str(self.error)
         
 
 ## Run shell command without output.
