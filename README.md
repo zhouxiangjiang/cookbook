@@ -17,5 +17,5 @@ git config --global user.email your-github-email
 
 git clone https://github.com/leven-cn/cookbook.git
 cd cookbook
-python3 admin.py init
+python3 setup.py
 ```

@@ -954,11 +954,7 @@ def search_algorithm():
 if __name__ == '__main__':
     import sys
     if len(sys.argv) != 1 and sys.argv[1] == 'install-python':
-        # Install Python 3
         import subprocess
-        subprocess.check_call('sudo apt-get update', shell=True)
-        subprocess.check_call('sudo apt-get install \
-                python3 python3-pip python3-dev build-essential', shell=True)
         subprocess.check_call('sudo pip3 install --upgrade virtualenv',
                 shell=True)
     print('Hello Python!')

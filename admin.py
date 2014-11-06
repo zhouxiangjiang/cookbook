@@ -50,3 +50,22 @@ class AdminTest(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
+    # Check system
+    import platform
+    import sys
+    if platform.system != 'Linux':
+        sys.exit('NOT Linux!')
+
+    # Initialization
+    import subprocess
+    linux_dist = platform.linux_distribution()
+    if linux_dist[0] == 'Ubuntu':
+        linux_dist_version = linux_dist[1]
+        if float(linux_dist_version) == 12.04:
+            # Install PIP 3
+            subprocess.check_call('sudo apt-get install python3-setuptools')
+            subprocess.check_call('sudo easy_install3 -m pip')
+        elif float(linux_dist_version) == 14.04:
+            # Install PIP 3
+            subprocess.check_call('sudo apt-get install python3-dev python3-pip')
+
