@@ -21,20 +21,24 @@ limitations under the License.
 
 import unittest
 
+
 class AdminError(Exception):
     '''Base exception for admin module.
     '''
-    def __init__(self, e=None):
+    def __init__(self, e=None, msg=''):
         self._error = e
+        self._msg = msg
 
     
     def __str__(self):
         if self._error:
             return str(self._error)
+        elif len(self._msg) != 0:
+            return self._msg
         else:
             return 'Unknown Error'
         
-        
+
 class AdminTest(unittest.TestCase):
     '''Unit testing for admin module.
     '''
@@ -45,4 +49,4 @@ class AdminTest(unittest.TestCase):
             
 if __name__ == '__main__':
     unittest.main()
-    
+
