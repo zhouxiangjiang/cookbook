@@ -38,14 +38,24 @@ def setup():
     # Install packages required
     linux_dist = platform.linux_distribution()
     if linux_dist[0] == 'Ubuntu':
+        shell('sudo apt-get install nginx')
+
         linux_dist_version = linux_dist[1]
         if float(linux_dist_version) == 12.04:
             # Install PIP 3
+            #
+            # Testing pass on Ubuntu 12.04.2-4
+            #
+            # NOTE: issue on Ubuntu 12.04.5
+            #       no python3-setuptools package exists!
             shell('sudo apt-get install python3-setuptools')
             shell('sudo easy_install3 -m pip')
         elif float(linux_dist_version) == 14.04:
             # Install PIP 3
             shell('sudo apt-get install python3-dev python3-pip')
+
+        # Install Django
+        shell('sudo pip3 install django')
 
 if __name__ == '__main__':
     setup()
