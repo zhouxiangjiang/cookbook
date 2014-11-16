@@ -3,6 +3,8 @@ cookbook
 
 Python/Web/Java/C Cookbook
 
+- [Quick Start on OS X](https://github.com/leven-cn/cookbook/wiki/Quick-Start-on-OS-X/)
+- [Quick Start with Bash](https://github.com/leven-cn/cookbook/wiki/Quick-Start-with-Bash/)
 - [Getting Started with Linux](https://github.com/leven-cn/cookbook/wiki/Getting-Started-with-Linux/)
 
 ## Setup
