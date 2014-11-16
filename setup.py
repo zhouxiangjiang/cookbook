@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''Setup cookbook environment.
-  
+'''Setup cookbook environment on OS X or Linux.
+
 
 Copyright 2014 Li Yun <leven.cn@gmail.com>
 
@@ -26,36 +26,33 @@ import subprocess
 
 def setup():
     '''Setup.'''
-    # Only support Linux
-    sys_type = platform.system()
-    if sys_type != 'Linux':
-        sys.exit('Current system: {0}, NOT Linux!'.format(sys_type))
-
     # Shell tools
     def shell(cmd):
         subprocess.check_call(cmd, shell=True)
 
-    # Install packages required
-    linux_dist = platform.linux_distribution()
-    if linux_dist[0] == 'Ubuntu':
-        shell('sudo apt-get install nginx')
+    sys_type = platform.system()
+    if sys_type == 'Linux':
 
-        linux_dist_version = linux_dist[1]
-        if float(linux_dist_version) == 12.04:
-            # Install PIP 3
-            #
-            # Testing pass on Ubuntu 12.04.2-4
-            #
-            # NOTE: issue on Ubuntu 12.04.5
-            #       no python3-setuptools package exists!
-            shell('sudo apt-get install python3-setuptools')
-            shell('sudo easy_install3 -m pip')
-        elif float(linux_dist_version) == 14.04:
-            # Install PIP 3
-            shell('sudo apt-get install python3-dev python3-pip')
+        # Determine Linux distribution
+        dist = platform.linux_distribution()
+        dist_type = dist[0]
+        dist_version = float(dist[1])
 
-        # Install Django
-        shell('sudo pip3 install django')
+        if dist_type == 'Ubuntu':
+            shell('sudo apt-get install nginx')
+            if version == 12.04:
+                # Issue: Cannot install python3-setuptools on Ubuntu 12.04.5
+                shell('sudo apt-get install python3-setuptools')
+                shell('sudo easy_install3 -m pip')
+            elif version == 14.04:
+                shell('sudo apt-get install python3-dev python3-pip')
+            shell('sudo pip3 install --upgrade django')
+    elif sys_type == 'Darwin':  # OS X
+        shell('sudo port install nginx py34-pip')
+        shell('sudo pip-3.4 install --upgrade django')
+    else:
+        sys.exit('Current system: {0}, NOT supported!'.format(sys_type))
+
 
 if __name__ == '__main__':
     setup()
