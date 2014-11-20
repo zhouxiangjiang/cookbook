@@ -1,12 +1,6 @@
 Python Cookbook
 ======
 
-Setup Python environment:
-
-```bash
-python3 __init__.py install-python
-```
-
 ## [The Zen of Python](http://legacy.python.org/dev/peps/pep-0020/ "PEP 20")
 
 > Beautiful is better than ugly.

@@ -74,6 +74,13 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 '''
 
+import sys
+
+
+if sys.version_info.major != 3 or sys.version_info.minor < 1:
+        sys.exit('Python 3.2+ required')
+        
+
 def loop():
     '''Loop technique.
     
@@ -558,10 +565,11 @@ def context_manager():
     #
     # **NOTE**: This context manager is *reentrant*.
     # @since Python 3.4
-    from contextlib import suppress
-    import os
-    with suppress(FileNotFoundError):
-        os.remove('not-exists')
+    if sys.version_info.minor >= 4:
+        from contextlib import suppress
+        import os
+        with suppress(FileNotFoundError):
+            os.remove('not-exists')
                 
         
     from contextlib import contextmanager
@@ -595,16 +603,17 @@ def context_manager():
     #             cleanup()
     #
     # @since Python 3.3
-    from contextlib import ExitStack
-    def do():
-        return False
-    def cleanup():
-        pass
-    with ExitStack() as stack:
-        stack.callback(cleanup)
-        result = do()
-        if result:
-            stack.pop_all()
+    if sys.version_info.minor >= 3:
+        from contextlib import ExitStack
+        def do():
+            return False
+        def cleanup():
+            pass
+        with ExitStack() as stack:
+            stack.callback(cleanup)
+            result = do()
+            if result:
+                stack.pop_all()
             
             
     # contextlib.ContextDecorator
@@ -659,12 +668,13 @@ def context_manager():
     #
     # **NOTE**: This context manager is *reusable* but *not reentrant*.
     # @since Python 3.4
-    from contextlib import redirect_stdout
-    import io
-    f = io.StringIO()
-    with redirect_stdout(f):
-        help(io)
-    s = f.getvalue()
+    if sys.version_info.minor >= 4:
+        from contextlib import redirect_stdout
+        import io
+        f = io.StringIO()
+        with redirect_stdout(f):
+            help(io)
+        s = f.getvalue()
     
     
 def re_pattern():
@@ -932,13 +942,6 @@ def search_algorithm():
     
 
 if __name__ == '__main__':
-    import sys
-    if len(sys.argv) != 1 and sys.argv[1] == 'install-python':
-        import subprocess
-        subprocess.check_call('sudo pip3 install --upgrade virtualenv',
-                shell=True)
-    print('Hello Python!')
-    
     # Loop technique
     loop()
     
@@ -960,3 +963,5 @@ if __name__ == '__main__':
     # Sort & Search Algorithms
     sort_algorithm()
     search_algorithm()
+
+    print('Hello Python!')
