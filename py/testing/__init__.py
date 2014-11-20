@@ -4,7 +4,6 @@
 '''@package py
 Python Testing Cookbook
 
-  - Unit Testing
   - doctest
   - MyPyUnit
   

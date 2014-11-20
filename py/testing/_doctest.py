@@ -78,6 +78,17 @@ def func_4():
     ValueError: error description
     '''
     raise ValueError("error description")
+    
+    
+def load_tests(loader, tests, ignore):
+    '''Doc-testing integrating with unit-testing.
+    '''
+    import doctest
+    import _doctest
+    finder = doctest.DocTestFinder(exclude_empty=False)
+    suite = doctest.DocTestSuite(_doctest, test_finder=finder)
+    tests.addTests(suite)
+    return tests
 
 
 if __name__ == '__main__':
