@@ -7,7 +7,7 @@ Setup Python environment:
 python3 __init__.py install-python
 ```
 
-## The Zen of Python
+## [The Zen of Python](http://legacy.python.org/dev/peps/pep-0020/ "PEP 20")
 
 > Beautiful is better than ugly.
 >
@@ -49,6 +49,11 @@ python3 __init__.py install-python
 
 
 ## Python Coding Style
+
+ - [PEP 8 - Style Guide for Python Code](http://legacy.python.org/dev/peps/pep-0008/)
+ - [PEP 257 - Docstring Conventions](http://legacy.python.org/dev/peps/pep-0257/)
+ 
+******
 
 - Use 4-space indentation, and avoid tabs. ( `-t` option )
 
@@ -159,3 +164,13 @@ python3 __init__.py install-python
 > your program faster: replace often-used (and name-lengthy) module attributes
 > with local references, your code runs fasters and has less clutter with a
 > shorter name.
+
+  
+## References
+
+  - Why I Love Python (2001)
+  - [Think Python](http://www.greenteapress.com/thinkpython/html/index.html)
+  - [Python 3 Documentation](https://docs.python.org/3/)
+  - Core Python Programming, 2nd Edition (2009)
+  - Core Python Applications Programming, 3rd Edition (2012)
+  - Python Cookbook, 3rd Edition (2013)

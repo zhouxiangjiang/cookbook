@@ -24,8 +24,6 @@ Python Cookbook
        
     `-OO` Discard docstrings in addition to the <em>-O</em> optimizations.
 
-    
-
 
 ## Virtual Running Environment
 
@@ -58,24 +56,6 @@ source bin/activate
 
         def f(x:int, y:int) -> int:
             return x + y
-
-
-## PEP
-
-  - [PEP 20 -- The Zen of Python](http://legacy.python.org/dev/peps/pep-0020/)
-  - [PEP 8 - Style Guide for Python Code](http://legacy.python.org/dev/peps/pep-0008/)
-  - [PEP 257 - Docstring Conventions](http://legacy.python.org/dev/peps/pep-0257/)
-  - [PEP 440 - Version Identification and Dependency Specification](http://legacy.python.org/dev/peps/pep-0440/)
-  
-
-## References
-
-  - Why I Love Python (2001)
-  - [Think Python](http://www.greenteapress.com/thinkpython/html/index.html)
-  - [Python 3 Documentation](https://docs.python.org/3/)
-  - Core Python Programming, 2nd Edition (2009)
-  - Core Python Applications Programming, 3rd Edition (2012)
-  - Python Cookbook, 3rd Edition (2013)
   
       
 Copyright (c) 2014 Li Yun <leven.cn@gmail.com>
