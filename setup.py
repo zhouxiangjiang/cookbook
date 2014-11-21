@@ -23,13 +23,11 @@ import platform
 import sys
 import subprocess
 
+import admin
+
 
 def setup():
     '''Setup.'''
-    # Shell tools
-    def shell(cmd):
-        subprocess.check_call(cmd, shell=True)
-
     sys_type = platform.system()
     if sys_type == 'Linux':
 
@@ -39,17 +37,17 @@ def setup():
         dist_version = float(dist[1])
 
         if dist_type == 'Ubuntu':
-            shell('sudo apt-get install nginx')
+            admin.shell('sudo apt-get install nginx')
             if version == 12.04:
                 # Issue: Cannot install python3-setuptools on Ubuntu 12.04.5
-                shell('sudo apt-get install python3-setuptools')
-                shell('sudo easy_install3 -m pip')
+                admin.shell('sudo apt-get install python3-setuptools')
+                admin.shell('sudo easy_install3 -m pip')
             elif version == 14.04:
-                shell('sudo apt-get install python3-dev python3-pip')
-            shell('sudo pip3 install --upgrade django')
+                admin.shell('sudo apt-get install python3-dev python3-pip')
+            admin.shell('sudo pip3 install --upgrade django')
     elif sys_type == 'Darwin':  # OS X
-        shell('sudo port install nginx py34-pip')
-        shell('sudo pip-3.4 install --upgrade django')
+        admin.shell('sudo port install nginx py34-pip')
+        admin.shell('sudo pip-3.4 install --upgrade django')
     else:
         sys.exit('Current system: {0}, NOT supported!'.format(sys_type))
 

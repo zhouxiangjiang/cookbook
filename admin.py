@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 '''Admin
-  
+
 
 Copyright 2014 Li Yun <leven.cn@gmail.com>
 
@@ -19,53 +19,118 @@ See the License for the specific language governing permissions and
 limitations under the License.
 '''
 
+import subprocess
+import sys
 import unittest
+
+
+if sys.version_info.major != 3 or sys.version_info.minor < 1:
+    sys.exit('Python 3.2+ required')
 
 
 class AdminError(Exception):
     '''Base exception for admin module.
     '''
-    def __init__(self, e=None, msg=''):
-        self._error = e
+    def __init__(self, err=None, msg=''):
+        if err is not None and len(msg) != 0:
+            self._error = err(msg)
+        else:
+            self._error = err
         self._msg = msg
 
-    
+
     def __str__(self):
-        if self._error:
+        if self._error is not None:
             return str(self._error)
         elif len(self._msg) != 0:
             return self._msg
         else:
             return 'Unknown Error'
-        
+
+
+def shell(cmd):
+    '''Run shell command without output.
+
+    @param cmd shell command
+    @exception AdminError(subprocess.CalledProcessError) - shell command error
+
+    @warning NOT supported on Windows
+    '''
+    try:
+        subprocess.check_call(cmd, shell=True)
+    except subprocess.CalledProcessError as err:
+        raise AdminError(err=err)
+
+
+def shell_output(cmd) -> str:
+    '''Run shell command with output.
+
+    @param cmd shell command
+    @return shell output without ending newline
+    @exception AdminError(subprocess.CalledProcessError) - shell command error
+
+    @warning NOT supported on Windows
+    '''
+    try:
+        output = subprocess.check_output(cmd, shell=True)
+    except subprocess.CalledProcessError as err:
+        raise AdminError(err=err)
+    return output.strip().decode()
+
 
 class AdminTest(unittest.TestCase):
     '''Unit testing for admin module.
     '''
+    def setUp(self):
+        # Initialization
+        pass
+
+
+    def tearDown(self):
+        # Clean up
+        pass
+
+
     def test_AdminError(self):
         with self.assertRaises(AdminError):
             raise AdminError()
-            
-            
+
+        with self.assertRaises(AdminError) as err:
+            raise AdminError()
+        self.assertTrue(isinstance(err.exception, AdminError))
+        self.assertEqual(str(err.exception), 'Unknown Error')
+
+        with self.assertRaises(AdminError) as err:
+            raise AdminError(err=KeyError, msg='KeyError Message')
+        self.assertEqual(str(err.exception), "'KeyError Message'")
+
+        with self.assertRaises(AdminError) as err:
+            raise AdminError(msg='CustomError Message')
+        self.assertEqual(str(err.exception), 'CustomError Message')
+
+
+    @unittest.skipIf(sys.platform == 'win32', 'not supported on Windows')
+    def test_shell(self):
+        with self.assertRaises(AdminError) as err:
+            shell('python1')
+        self.assertTrue(isinstance(err.exception._error, subprocess.CalledProcessError))
+
+
+    @unittest.skipIf(sys.platform == 'win32', 'not supported on Windows')
+    def test_shell_output(self):
+        if sys.platform == 'darwin':
+            self.assertTrue(shell_output('python3.{0} --version'.format(sys.version_info.minor)).startswith('Python'))
+        else:
+            self.assertTrue(shell_output('python3 --version').startswith('Python'))
+
+        with self.assertRaises(AdminError) as err:
+            self.assertTrue(shell_output('python1 --version').startswith('Python'))
+        self.assertTrue(isinstance(err.exception._error, subprocess.CalledProcessError))
+
+
 if __name__ == '__main__':
-    unittest.main()
-
-    # Check system
-    import platform
-    import sys
-    if platform.system != 'Linux':
-        sys.exit('NOT Linux!')
-
-    # Initialization
-    import subprocess
-    linux_dist = platform.linux_distribution()
-    if linux_dist[0] == 'Ubuntu':
-        linux_dist_version = linux_dist[1]
-        if float(linux_dist_version) == 12.04:
-            # Install PIP 3
-            subprocess.check_call('sudo apt-get install python3-setuptools')
-            subprocess.check_call('sudo easy_install3 -m pip')
-        elif float(linux_dist_version) == 14.04:
-            # Install PIP 3
-            subprocess.check_call('sudo apt-get install python3-dev python3-pip')
-
+    if sys.platform == 'win32':
+        # On Windows, IDLE would show trace-back output of SystemExit exception.
+        unittest.main(exit=False)
+    else:
+        unittest.main()
