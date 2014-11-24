@@ -111,20 +111,24 @@ class AdminTest(unittest.TestCase):
 
     @unittest.skipIf(sys.platform == 'win32', 'not supported on Windows')
     def test_shell(self):
+        # Since `shell()` is a thin wrapper for standard API: `subprocess.check_call()`,
+        # it needs to test exception raising only.
         with self.assertRaises(AdminError) as err:
-            shell('python1')
+            shell('not-exist-command')
         self.assertTrue(isinstance(err.exception._error, subprocess.CalledProcessError))
 
 
     @unittest.skipIf(sys.platform == 'win32', 'not supported on Windows')
     def test_shell_output(self):
+        # Since `shell_output()` is a thin wrapper for standard API: `subprocess.check_output()`,
+        # it needs to test exception raising only.
         if sys.platform == 'darwin':
             self.assertTrue(shell_output('python3.{0} --version'.format(sys.version_info.minor)).startswith('Python'))
         else:
             self.assertTrue(shell_output('python3 --version').startswith('Python'))
 
         with self.assertRaises(AdminError) as err:
-            self.assertTrue(shell_output('python1 --version').startswith('Python'))
+            self.assertTrue(shell_output('not-exist-command').startswith('anything'))
         self.assertTrue(isinstance(err.exception._error, subprocess.CalledProcessError))
 
 
