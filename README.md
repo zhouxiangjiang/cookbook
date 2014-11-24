@@ -22,7 +22,7 @@ git config --global user.email your-github-email
 
 git clone https://github.com/leven-cn/cookbook.git
 cd cookbook
-python3 setup.py
+python3 admin.py setup
 ```
 
 ### OS X with MacPorts
@@ -37,5 +37,5 @@ git config --global user.email your-github-email
 
 git clone https://github.com/leven-cn/cookbook.git
 cd cookbook
-python3.4 setup.py
+python3.4 admin.py setup
 ```
